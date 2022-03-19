@@ -1,0 +1,10 @@
+﻿{
+  "type": "Plugin",
+  "name": "Spotify Plugin",
+  "author": "Develeon64",
+  "repository": "https://github.com/Develeon64/Macro-Deck-Spotify-Plugin",
+  "packageId": "Develeon64.SpotifyPlugin",
+  "version": "1.0.0",
+  "target-plugin-api-version": 32,
+  "dll": "SpotifyPlugin.dll"
+}

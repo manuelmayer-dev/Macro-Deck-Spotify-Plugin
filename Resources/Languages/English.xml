@@ -1,0 +1,66 @@
+﻿<?xml version="1.0"?>
+<PluginStrings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <__Language__>English</__Language__>
+  <__LanguageCode__>en</__LanguageCode__>
+  <__Author__>Develeon64</__Author__>
+
+  <PluginName>Spotify Plugin</PluginName>
+  <PluginDescription>Control your Spotify app with Macro Deck 2</PluginDescription>
+
+  <TokenCannotBeEmpty>Token cannot be empty</TokenCannotBeEmpty>
+
+  <SpotifyAuthorize>Authorize Spotify</SpotifyAuthorize>
+  <SpotifyOkButton>Ok</SpotifyOkButton>
+
+  <LoopActionName>Repeat</LoopActionName>
+  <LoopActionDescription>Set repeating mode</LoopActionDescription>
+  <LoopActionModeActivate>Repeat playlist</LoopActionModeActivate>
+  <LoopActionModeDeactivate>Repeating off</LoopActionModeDeactivate>
+  <LoopActionModeToggle>Repeat track</LoopActionModeToggle>
+  <LoopActionWorkingModeText>Working Mode</LoopActionWorkingModeText>
+  <LoopActionOff>Off</LoopActionOff>
+  <LoopActionSingle>Single track</LoopActionSingle>
+  <LoopActionContext>Whole playlist</LoopActionContext>
+
+  <PauseActionName>Toggle playing</PauseActionName>
+  <PauseActionDescription>Play your music, pause it or resume</PauseActionDescription>
+  <PauseActionModeActivate>Play playback</PauseActionModeActivate>
+  <PauseActionModeDeactivate>Pause playback</PauseActionModeDeactivate>
+  <PauseActionModeToggle>Toggle playback</PauseActionModeToggle>
+  <PauseActionWorkingModeText>Working mode</PauseActionWorkingModeText>
+  <PauseActionPause>Pause</PauseActionPause>
+  <PauseActionPlay>Play</PauseActionPlay>
+  <PauseActionToggle>Toggle</PauseActionToggle>
+
+  <PlaylistActionName>Play playlist</PlaylistActionName>
+  <PlaylistActionDescription>Play a specific playlist</PlaylistActionDescription>
+  <PlaylistActionPlaylist>Playlist</PlaylistActionPlaylist>
+  <PlaylistActionTrack>Track</PlaylistActionTrack>
+  <PlaylistActionSetPlaylist>Set playlist to</PlaylistActionSetPlaylist>
+
+  <PreviousActionName>Previous Track</PreviousActionName>
+  <PreviousActionDescription>Go back to the last track</PreviousActionDescription>
+
+  <ShuffleActionName>Toggle shuffle mode</ShuffleActionName>
+  <ShuffleActionDescription>Toggle if music should be played in random order</ShuffleActionDescription>
+  <ShuffleActionModeActivate>Activate shuffle mode</ShuffleActionModeActivate>
+  <ShuffleActionModeDeactivate>Deactivate shuffle mode</ShuffleActionModeDeactivate>
+  <ShuffleActionModeToggle>Toggle shuffle mode</ShuffleActionModeToggle>
+  <ShuffleActionWorkingModeText>Working mode</ShuffleActionWorkingModeText>
+  <ShuffleActionOff>Off</ShuffleActionOff>
+  <ShuffleActionOn>On</ShuffleActionOn>
+  <ShuffleActionToggle>Toggle</ShuffleActionToggle>
+
+  <SkipActionName>Skip Track</SkipActionName>
+  <SkipActionDescription>Skip the current track</SkipActionDescription>
+
+  <VolumeActionName>Set volume</VolumeActionName>
+  <VolumeActionDescription>Change the volume of your Spotify player</VolumeActionDescription>
+  <VolumeActionModeIncrease>Increase</VolumeActionModeIncrease>
+  <VolumeActionModeDecrease>Decrease</VolumeActionModeDecrease>
+  <VolumeActionModeSet>Set to</VolumeActionModeSet>
+  <VolumeActionWorkingModeText>Working mode</VolumeActionWorkingModeText>
+  <VolumeActionDecrease>Reduce by</VolumeActionDecrease>
+  <VolumeActionIncrease>Increase by</VolumeActionIncrease>
+  <VolumeActionSet>Set to</VolumeActionSet>
+</PluginStrings>
