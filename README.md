@@ -35,5 +35,5 @@ Please use the ISO names for the file name and for the __Language__ node in the 
 
 ## Third party licenses
 This plugin uses some awesome 3rd party libraries:
-- [SpotifyAPI-NET (MIT license)](https://github.com/JohnnyCrazy/SpotifyAPI-NET)
-- [Spotify logo in the icon (Copyright Spotify AB)](https://developer.spotify.com/documentation/general/design-and-branding/#using-our-logo)
+- [SpotifyAPI-NET](https://github.com/JohnnyCrazy/SpotifyAPI-NET) (MIT license)
+- [Spotify logo](https://developer.spotify.com/documentation/general/design-and-branding/#using-our-logo) in the icon (Copyright Spotify AB)
