@@ -17,7 +17,6 @@ namespace Develeon64.SpotifyPlugin {
 	public class Main : MacroDeckPlugin {
 		public override bool CanConfigure => true;
 
-		private readonly ToolTip statusToolTip = new ToolTip();
 		private ContentSelectorButton statusButton = new ContentSelectorButton();
 		private MainWindow mainWindow;
 		private System.Timers.Timer timer;

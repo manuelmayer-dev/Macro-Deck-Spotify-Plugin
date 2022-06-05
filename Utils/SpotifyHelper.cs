@@ -148,6 +148,7 @@ namespace Develeon64.SpotifyPlugin.Utils {
 					VariableManager.SetValue("spotify_playing_loop", item.RepeatState.Substring(0, 1).ToUpper() + item.RepeatState.Substring(1), VariableType.String, PluginInstance.Main, false);
 					VariableManager.SetValue("spotify_playing_shuffle", item.ShuffleState, VariableType.Bool, PluginInstance.Main, false);
 					VariableManager.SetValue("spotify_playing_volume", item.Device.VolumePercent, VariableType.Integer, PluginInstance.Main, false);
+					VariableManager.SetValue("spotify_playing_link", ((FullTrack)item.Item).ExternalUrls["spotify"], VariableType.String, PluginInstance.Main, false);
 					VariableManager.SetValue("spotify_playing", item.IsPlaying, VariableType.Bool, PluginInstance.Main, true);
 				}
 				else {
@@ -156,6 +157,7 @@ namespace Develeon64.SpotifyPlugin.Utils {
 					VariableManager.SetValue("spotify_playing_loop", "Off", VariableType.String, PluginInstance.Main, false);
 					VariableManager.SetValue("spotify_playing_shuffle", false, VariableType.Bool, PluginInstance.Main, false);
 					VariableManager.SetValue("spotify_playing_volume", 100, VariableType.Integer, PluginInstance.Main, false);
+					VariableManager.SetValue("spotify_playing_link", "https://open.spotify.com/track/", VariableType.String, PluginInstance.Main, false);
 					VariableManager.SetValue("spotify_playing", false, VariableType.Bool, PluginInstance.Main, true);
 				}
 			}
