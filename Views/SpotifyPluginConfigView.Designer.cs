@@ -31,6 +31,8 @@ namespace Develeon64.SpotifyPlugin.Views {
 			this.txtRefreshToken = new SuchByte.MacroDeck.GUI.CustomControls.RoundedTextBox();
 			this.txtClientId = new SuchByte.MacroDeck.GUI.CustomControls.RoundedTextBox();
 			this.lblClientId = new System.Windows.Forms.Label();
+			this.lblAccessToken = new System.Windows.Forms.Label();
+			this.lblRefreshToken = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// btnOk
@@ -138,10 +140,30 @@ namespace Develeon64.SpotifyPlugin.Views {
 			this.lblClientId.Text = "Client ID:";
 			this.lblClientId.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
+			// lblAccessToken
+			// 
+			this.lblAccessToken.Location = new System.Drawing.Point(80, 80);
+			this.lblAccessToken.Name = "lblAccessToken";
+			this.lblAccessToken.Size = new System.Drawing.Size(60, 25);
+			this.lblAccessToken.TabIndex = 5;
+			this.lblAccessToken.Text = "Token:";
+			this.lblAccessToken.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// lblRefreshToken
+			// 
+			this.lblRefreshToken.Location = new System.Drawing.Point(80, 110);
+			this.lblRefreshToken.Name = "lblRefreshToken";
+			this.lblRefreshToken.Size = new System.Drawing.Size(60, 25);
+			this.lblRefreshToken.TabIndex = 6;
+			this.lblRefreshToken.Text = "Refresh:";
+			this.lblRefreshToken.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
 			// SpotifyPluginConfigView
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.ClientSize = new System.Drawing.Size(600, 200);
+			this.Controls.Add(this.lblRefreshToken);
+			this.Controls.Add(this.lblAccessToken);
 			this.Controls.Add(this.lblClientId);
 			this.Controls.Add(this.txtClientId);
 			this.Controls.Add(this.txtRefreshToken);
@@ -157,6 +179,8 @@ namespace Develeon64.SpotifyPlugin.Views {
 			this.Controls.SetChildIndex(this.txtRefreshToken, 0);
 			this.Controls.SetChildIndex(this.txtClientId, 0);
 			this.Controls.SetChildIndex(this.lblClientId, 0);
+			this.Controls.SetChildIndex(this.lblAccessToken, 0);
+			this.Controls.SetChildIndex(this.lblRefreshToken, 0);
 			this.ResumeLayout(false);
 
 		}
@@ -168,5 +192,7 @@ namespace Develeon64.SpotifyPlugin.Views {
 		private RoundedTextBox txtRefreshToken;
 		private RoundedTextBox txtClientId;
 		private System.Windows.Forms.Label lblClientId;
+		private System.Windows.Forms.Label lblAccessToken;
+		private System.Windows.Forms.Label lblRefreshToken;
 	}
 }
