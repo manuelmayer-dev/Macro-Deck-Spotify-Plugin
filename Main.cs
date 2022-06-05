@@ -58,7 +58,7 @@ namespace Develeon64.SpotifyPlugin {
 			if (SpotifyHelper.IsConnected) {
 				this.timer = new System.Timers.Timer {
 					Enabled = true,
-					Interval = 5 * 1000,
+					Interval = 2 * 1000,
 				};
 				this.timer.Elapsed += this.UpdateTimer_Elapsed;
 			}
