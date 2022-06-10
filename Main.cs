@@ -46,7 +46,19 @@ namespace Develeon64.SpotifyPlugin {
 				this.MacroDeck_OnMainWindowLoad(MacroDeck.MainWindow, EventArgs.Empty);
 
 			SpotifyHelper.Connect(CredentialHelper.GetCredentials()?.AccessToken ?? null);
+
+			System.Timers.Timer time = new System.Timers.Timer() {
+				AutoReset = false,
+				Enabled = true,
+				Interval = 2 * 60 * 1000,
+			};
+			time.Elapsed += this.Time_Elapsed;
+		}
+
+		private void Time_Elapsed (object sender, System.Timers.ElapsedEventArgs e) {
 			this.SetUpdateTimer();
+			((System.Timers.Timer)sender).Enabled = false;
+			((System.Timers.Timer)sender).Dispose();
 		}
 
 		private void SetUpdateTimer () {
@@ -57,6 +69,7 @@ namespace Develeon64.SpotifyPlugin {
 
 			if (SpotifyHelper.IsConnected) {
 				this.timer = new System.Timers.Timer {
+					AutoReset = true,
 					Enabled = true,
 					Interval = 2 * 1000,
 				};
@@ -107,7 +120,8 @@ namespace Develeon64.SpotifyPlugin {
 					this.statusButton.BackgroundImage = SpotifyHelper.IsConnected ? Properties.Resources.Spotify_Connected : Properties.Resources.Spotify_Disconnected;
 				}));
 
-				this.SetUpdateTimer();
+				if (this.timer != null)
+					this.timer.Enabled = SpotifyHelper.IsConnected;
 			}
 		}
 

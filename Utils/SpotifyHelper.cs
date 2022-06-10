@@ -121,10 +121,19 @@ namespace Develeon64.SpotifyPlugin.Utils {
 				LoginCredentials credentials = CredentialHelper.GetCredentials();
 				if (credentials == null || string.IsNullOrWhiteSpace(credentials.RefreshToken) || string.IsNullOrEmpty(_clientId)) return;
 
-				PKCETokenRefreshRequest request = new PKCETokenRefreshRequest(_clientId, credentials.RefreshToken);
-				_token = await new OAuthClient().RequestToken(request);
-				SpotifyClientConfig config = SpotifyClientConfig.CreateDefault(_token.AccessToken);
-				spotify = new SpotifyClient(config);
+				try {
+					PKCETokenRefreshRequest request = new PKCETokenRefreshRequest(_clientId, credentials.RefreshToken);
+					_token = await new OAuthClient().RequestToken(request);
+					SpotifyClientConfig config = SpotifyClientConfig.CreateDefault(_token.AccessToken);
+					spotify = new SpotifyClient(config);
+				}
+				catch (APIException ex) {
+					MacroDeckLogger.Error(PluginInstance.Main, ex.Response.Body.ToString());
+				}
+				catch (Exception ex) {
+					MacroDeckLogger.Error(PluginInstance.Main, $"Error: {ex.Message}");
+				}
+
 				CredentialHelper.UpdateCredentials(_token.AccessToken, _token.RefreshToken);
 			}
 		}
