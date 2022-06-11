@@ -37,6 +37,7 @@ namespace Develeon64.SpotifyPlugin {
 				new ShuffleAction(),
 				new VolumeAction(),
 				new PlaylistAction(),
+				new LibraryActionAction(),
 			};
 
 			MacroDeck.OnMainWindowLoad += this.MacroDeck_OnMainWindowLoad;

@@ -42,6 +42,9 @@
     <Compile Update="Views\LoopActionConfigView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Views\LibraryActionConfigView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

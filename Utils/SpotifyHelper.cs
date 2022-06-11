@@ -158,6 +158,7 @@ namespace Develeon64.SpotifyPlugin.Utils {
 					VariableManager.SetValue("spotify_playing_shuffle", item.ShuffleState, VariableType.Bool, PluginInstance.Main, false);
 					VariableManager.SetValue("spotify_playing_volume", item.Device.VolumePercent, VariableType.Integer, PluginInstance.Main, false);
 					VariableManager.SetValue("spotify_playing_link", ((FullTrack)item.Item).ExternalUrls["spotify"], VariableType.String, PluginInstance.Main, false);
+					VariableManager.SetValue("spotify_track_in_library", (await spotify.Library.CheckTracks(new LibraryCheckTracksRequest(new List<string>(new string[] { ((FullTrack)item.Item).Id }))))[0], VariableType.Bool, PluginInstance.Main, false);
 					VariableManager.SetValue("spotify_playing", item.IsPlaying, VariableType.Bool, PluginInstance.Main, true);
 				}
 				else {
@@ -167,6 +168,7 @@ namespace Develeon64.SpotifyPlugin.Utils {
 					VariableManager.SetValue("spotify_playing_shuffle", false, VariableType.Bool, PluginInstance.Main, false);
 					VariableManager.SetValue("spotify_playing_volume", 100, VariableType.Integer, PluginInstance.Main, false);
 					VariableManager.SetValue("spotify_playing_link", "https://open.spotify.com/track/", VariableType.String, PluginInstance.Main, false);
+					VariableManager.SetValue("spotify_track_in_library", false, VariableType.Bool, PluginInstance.Main, false);
 					VariableManager.SetValue("spotify_playing", false, VariableType.Bool, PluginInstance.Main, true);
 				}
 			}
@@ -299,6 +301,47 @@ namespace Develeon64.SpotifyPlugin.Utils {
 			}
 
 			UpdateVars(true);
+		}
+
+		public static async void SetLibrary (bool add) {
+			switch (add) {
+				case true:
+					AddLibrary();
+					break;
+				case false:
+					RemoveLibrary();
+					break;
+				default:
+					break;
+			}
+		}
+
+		public static async void AddLibrary (FullTrack track = null) {
+			if (track == null) {
+				PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
+				CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
+				track = (FullTrack)playing.Item;
+			}
+			await spotify.Library.SaveTracks(new LibrarySaveTracksRequest(new List<string>(new string[] { track.Id })));
+		}
+
+		public static async void RemoveLibrary (FullTrack track = null) {
+			if (track == null) {
+			PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
+			CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
+			track = (FullTrack)playing.Item;
+			}
+			await spotify.Library.RemoveTracks(new LibraryRemoveTracksRequest(new List<string>(new string[] { track.Id })));
+		}
+
+		public static async void SwitchLibrary () {
+			PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
+			CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
+			FullTrack track = (FullTrack)playing.Item;
+			if ((await spotify.Library.CheckTracks(new LibraryCheckTracksRequest(new List<string>(new string[] { track.Id }))))[0])
+				RemoveLibrary(track);
+			else
+				AddLibrary(track);
 		}
 
 		public static async Task<List<SimplePlaylist>> GetPlaylists () {

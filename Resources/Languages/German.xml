@@ -63,4 +63,14 @@
   <VolumeActionDecrease>Verringern um</VolumeActionDecrease>
   <VolumeActionIncrease>Erhöhen um</VolumeActionIncrease>
   <VolumeActionSet>Setzen auf</VolumeActionSet>
+
+  <ShuffleActionName>Zur Bibliothek hinzufügen/entfernen</ShuffleActionName>
+  <ShuffleActionDescription>Füge den aktuell gespielten Titel zu deiner persönlichen Bibliothek hinzu, oder entferne ihn</ShuffleActionDescription>
+  <ShuffleActionModeActivate>Zur Bibliothek hinzufügen</ShuffleActionModeActivate>
+  <ShuffleActionModeDeactivate>Aus Bibliothek entfernen</ShuffleActionModeDeactivate>
+  <ShuffleActionModeToggle>Bibliothek umschalten</ShuffleActionModeToggle>
+  <ShuffleActionWorkingModeText>Modus</ShuffleActionWorkingModeText>
+  <ShuffleActionRemove>Entfernen</ShuffleActionRemove>
+  <ShuffleActionAdd>Hinzufügen</ShuffleActionAdd>
+  <ShuffleActionToggle>Umschalten</ShuffleActionToggle>
 </PluginStrings>

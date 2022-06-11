@@ -102,5 +102,15 @@ namespace Develeon64.SpotifyPlugin.Utils {
 		public string VolumeActionDecrease = "Reduce by";
 		public string VolumeActionIncrease = "Increase by";
 		public string VolumeActionSet = "Set to";
+
+		public string LibraryActionName = "Add/Remove Library";
+		public string LibraryActionDescription = "Add or Remove the currently playing Track to your personal Library";
+		public string LibraryActionModeActivate = "Add to Library";
+		public string LibraryActionModeDeactivate = "Remove from Library";
+		public string LibraryActionModeToggle = "Toggle Library";
+		public string LibraryActionWorkingModeText = "Working mode";
+		public string LibraryActionRemove = "Remove";
+		public string LibraryActionAdd = "Add";
+		public string LibraryActionToggle = "Toggle";
 	}
 }

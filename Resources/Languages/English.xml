@@ -63,4 +63,14 @@
   <VolumeActionDecrease>Reduce by</VolumeActionDecrease>
   <VolumeActionIncrease>Increase by</VolumeActionIncrease>
   <VolumeActionSet>Set to</VolumeActionSet>
+
+  <LibraryActionName>Add/Remove Library</LibraryActionName>
+  <LibraryActionDescription>Add or Remove the currently playing Track to your personal Library</LibraryActionDescription>
+  <LibraryActionModeActivate>Add to Library</LibraryActionModeActivate>
+  <LibraryActionModeDeactivate>Remove from Library</LibraryActionModeDeactivate>
+  <LibraryActionModeToggle>Toggle Library</LibraryActionModeToggle>
+  <LibraryActionWorkingModeText>Working mode</LibraryActionWorkingModeText>
+  <LibraryActionRemove>Remove</LibraryActionRemove>
+  <LibraryActionAdd>Add</LibraryActionAdd>
+  <LibraryActionToggle>Toggle</LibraryActionToggle>
 </PluginStrings>
