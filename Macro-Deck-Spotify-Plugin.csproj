@@ -30,6 +30,7 @@
     </Reference>
     <PackageReference Include="SpotifyAPI.Web" Version="6.2.2" />
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="6.2.2" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.3" />
   </ItemGroup>
 
