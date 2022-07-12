@@ -317,31 +317,40 @@ namespace Develeon64.SpotifyPlugin.Utils {
 		}
 
 		public static async void AddLibrary (FullTrack track = null) {
-			if (track == null) {
-				PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
-				CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
-				track = (FullTrack)playing.Item;
+			if (spotify != null && spotify.Player != null) {
+				if (track == null) {
+					PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
+					CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
+					if (playing == null) return;
+					track = (FullTrack)playing.Item;
+				}
+				await spotify.Library.SaveTracks(new LibrarySaveTracksRequest(new List<string>(new string[] { track.Id })));
 			}
-			await spotify.Library.SaveTracks(new LibrarySaveTracksRequest(new List<string>(new string[] { track.Id })));
 		}
 
 		public static async void RemoveLibrary (FullTrack track = null) {
-			if (track == null) {
-			PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
-			CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
-			track = (FullTrack)playing.Item;
+			if (spotify != null && spotify.Player != null) {
+				if (track == null) {
+					PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
+					CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
+					if (playing == null) return;
+					track = (FullTrack)playing.Item;
+				}
+				await spotify.Library.RemoveTracks(new LibraryRemoveTracksRequest(new List<string>(new string[] { track.Id })));
 			}
-			await spotify.Library.RemoveTracks(new LibraryRemoveTracksRequest(new List<string>(new string[] { track.Id })));
 		}
 
 		public static async void SwitchLibrary () {
-			PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
-			CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
-			FullTrack track = (FullTrack)playing.Item;
-			if ((await spotify.Library.CheckTracks(new LibraryCheckTracksRequest(new List<string>(new string[] { track.Id }))))[0])
-				RemoveLibrary(track);
-			else
-				AddLibrary(track);
+			if (spotify != null && spotify.Player != null) {
+				PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
+				CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
+				if (playing == null) return;
+				FullTrack track = (FullTrack)playing.Item;
+				if ((await spotify.Library.CheckTracks(new LibraryCheckTracksRequest(new List<string>(new string[] { track.Id }))))[0])
+					RemoveLibrary(track);
+				else
+					AddLibrary(track);
+			}
 		}
 
 		public static async Task<List<SimplePlaylist>> GetPlaylists () {
