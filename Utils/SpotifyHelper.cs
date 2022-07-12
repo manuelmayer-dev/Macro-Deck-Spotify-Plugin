@@ -21,6 +21,7 @@ namespace Develeon64.SpotifyPlugin.Utils {
 
 		private static string _clientId;
 		private static PKCETokenResponse _token;
+		private static DateTime tokenExpire;
 		private static string _verifier;
 
 		public static bool IsConnected {
@@ -117,7 +118,7 @@ namespace Develeon64.SpotifyPlugin.Utils {
 		}
 
 		public static async void CheckTokenRefresh () {
-			if (_token == null || _token.ExpiresIn < 10) {
+			if (_token == null || tokenExpire.Subtract(DateTime.Now).TotalMinutes < 5) {
 				LoginCredentials credentials = CredentialHelper.GetCredentials();
 				if (credentials == null || string.IsNullOrWhiteSpace(credentials.RefreshToken) || string.IsNullOrEmpty(_clientId)) return;
 
@@ -126,6 +127,7 @@ namespace Develeon64.SpotifyPlugin.Utils {
 					_token = await new OAuthClient().RequestToken(request);
 					SpotifyClientConfig config = SpotifyClientConfig.CreateDefault(_token.AccessToken);
 					spotify = new SpotifyClient(config);
+					tokenExpire = DateTime.Now.AddSeconds(_token.ExpiresIn);
 				}
 				catch (APIException ex) {
 					MacroDeckLogger.Error(PluginInstance.Main, ex.Response.Body.ToString());
@@ -372,11 +374,27 @@ namespace Develeon64.SpotifyPlugin.Utils {
 		}
 
 		public static async void SetPlaylist (string id, int track = 0) {
-			PlayerResumePlaybackRequest request = new PlayerResumePlaybackRequest() {
+			PlayerResumePlaybackRequest resumeRequest = new PlayerResumePlaybackRequest() {
 				ContextUri = id,
 				OffsetParam = new PlayerResumePlaybackRequest.Offset() { Position = track },
 			};
-			var play = await spotify.Player.ResumePlayback(request);
+			try {
+				if (!Boolean.Parse(VariableManager.ListVariables.FirstOrDefault(v => v.Name.Equals("spotify_playing")).Value)) {
+					List<string> devices = new List<string>();
+					foreach (Device device in (await spotify.Player.GetAvailableDevices()).Devices) {
+						if (device.Name.ToLower() == Environment.MachineName.ToLower()) {
+							devices.Add(device.Id);
+							break;
+						}
+					}
+					PlayerTransferPlaybackRequest transferRequest = new PlayerTransferPlaybackRequest(devices) {
+						Play = false,
+					};
+					await spotify.Player.TransferPlayback(transferRequest);
+				}
+				await spotify.Player.ResumePlayback(resumeRequest);
+			}
+			catch (Exception) { }
 		}
 	}
 }
