@@ -374,11 +374,27 @@ namespace Develeon64.SpotifyPlugin.Utils {
 		}
 
 		public static async void SetPlaylist (string id, int track = 0) {
-			PlayerResumePlaybackRequest request = new PlayerResumePlaybackRequest() {
+			PlayerResumePlaybackRequest resumeRequest = new PlayerResumePlaybackRequest() {
 				ContextUri = id,
 				OffsetParam = new PlayerResumePlaybackRequest.Offset() { Position = track },
 			};
-			var play = await spotify.Player.ResumePlayback(request);
+			try {
+				if (!Boolean.Parse(VariableManager.ListVariables.FirstOrDefault(v => v.Name.Equals("spotify_playing")).Value)) {
+					List<string> devices = new List<string>();
+					foreach (Device device in (await spotify.Player.GetAvailableDevices()).Devices) {
+						if (device.Name.ToLower() == Environment.MachineName.ToLower()) {
+							devices.Add(device.Id);
+							break;
+						}
+					}
+					PlayerTransferPlaybackRequest transferRequest = new PlayerTransferPlaybackRequest(devices) {
+						Play = false,
+					};
+					await spotify.Player.TransferPlayback(transferRequest);
+				}
+				await spotify.Player.ResumePlayback(resumeRequest);
+			}
+			catch (Exception) { }
 		}
 	}
 }
