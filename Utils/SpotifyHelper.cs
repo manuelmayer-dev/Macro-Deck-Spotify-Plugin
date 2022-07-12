@@ -21,6 +21,7 @@ namespace Develeon64.SpotifyPlugin.Utils {
 
 		private static string _clientId;
 		private static PKCETokenResponse _token;
+		private static DateTime tokenExpire;
 		private static string _verifier;
 
 		public static bool IsConnected {
@@ -117,7 +118,7 @@ namespace Develeon64.SpotifyPlugin.Utils {
 		}
 
 		public static async void CheckTokenRefresh () {
-			if (_token == null || _token.ExpiresIn < 10) {
+			if (_token == null || tokenExpire.Subtract(DateTime.Now).TotalMinutes < 5) {
 				LoginCredentials credentials = CredentialHelper.GetCredentials();
 				if (credentials == null || string.IsNullOrWhiteSpace(credentials.RefreshToken) || string.IsNullOrEmpty(_clientId)) return;
 
@@ -126,6 +127,7 @@ namespace Develeon64.SpotifyPlugin.Utils {
 					_token = await new OAuthClient().RequestToken(request);
 					SpotifyClientConfig config = SpotifyClientConfig.CreateDefault(_token.AccessToken);
 					spotify = new SpotifyClient(config);
+					tokenExpire = DateTime.Now.AddSeconds(_token.ExpiresIn);
 				}
 				catch (APIException ex) {
 					MacroDeckLogger.Error(PluginInstance.Main, ex.Response.Body.ToString());
