@@ -1,13 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Develeon64.SpotifyPlugin</RootNamespace>
-    <UseWindowsForms>true</UseWindowsForms>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <AssemblyName>SpotifyPlugin</AssemblyName>
     <Authors>Develeon64</Authors>
     <Copyright>Develeon64</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Develeon64.SpotifyPlugin</RootNamespace>
+    <Version>1.0.2</Version>
+    <FileVersion>1.0.2.0</FileVersion>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <AssemblyName>SpotifyPlugin</AssemblyName>
+    <UseWindowsForms>true</UseWindowsForms>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
