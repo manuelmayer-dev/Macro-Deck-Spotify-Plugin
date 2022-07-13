@@ -15,7 +15,11 @@ namespace Develeon64.SpotifyPlugin.Actions {
 
 		public override void Trigger (string clientId, ActionButton actionButton) {
 			PlaylistActionConfigModel config = PlaylistActionConfigModel.Deserialize(this.Configuration);
-			SpotifyHelper.SetPlaylist(config.Uri, config.Track);
+
+			if (config.Uri == "Library")
+				SpotifyHelper.PlayLibrary(config.Track);
+			else
+				SpotifyHelper.SetPlaylist(config.Uri, config.Track);
 		}
 
 		public override ActionConfigControl GetActionConfigControl (ActionConfigurator actionConfigurator) {

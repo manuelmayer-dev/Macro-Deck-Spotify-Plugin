@@ -47,19 +47,6 @@ namespace Develeon64.SpotifyPlugin {
 				this.MacroDeck_OnMainWindowLoad(MacroDeck.MainWindow, EventArgs.Empty);
 
 			SpotifyHelper.Connect(CredentialHelper.GetCredentials()?.AccessToken ?? null);
-
-			System.Timers.Timer time = new System.Timers.Timer() {
-				AutoReset = false,
-				Enabled = true,
-				Interval = 2 * 60 * 1000,
-			};
-			time.Elapsed += this.Time_Elapsed;
-		}
-
-		private void Time_Elapsed (object sender, System.Timers.ElapsedEventArgs e) {
-			this.SetUpdateTimer();
-			((System.Timers.Timer)sender).Enabled = false;
-			((System.Timers.Timer)sender).Dispose();
 		}
 
 		private void SetUpdateTimer () {
@@ -87,6 +74,7 @@ namespace Develeon64.SpotifyPlugin {
 			statusButton.Click += this.StatusButton_Click;
 			mainWindow.contentButtonPanel.Controls.Add(statusButton);
 
+			this.SetUpdateTimer();
 			SpotifyHelper.CheckTokenRefresh();
 			this.UpdateStatus();
 		}
