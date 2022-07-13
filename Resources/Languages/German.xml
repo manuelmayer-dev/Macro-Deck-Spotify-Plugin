@@ -35,6 +35,7 @@
   <PlaylistActionName>Spiele Playlist</PlaylistActionName>
   <PlaylistActionDescription>Spiele eine bestimmte Playlist ab</PlaylistActionDescription>
   <PlaylistActionPlaylist>Playlist</PlaylistActionPlaylist>
+  <PlaylistActionLibrary>Persönliche Lieblingssongs</PlaylistActionLibrary>
   <PlaylistActionTrack>Track</PlaylistActionTrack>
   <PlaylistActionSetPlaylist>Spiele Playlist</PlaylistActionSetPlaylist>
 

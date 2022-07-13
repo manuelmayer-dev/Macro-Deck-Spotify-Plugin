@@ -35,6 +35,7 @@
   <PlaylistActionName>Play playlist</PlaylistActionName>
   <PlaylistActionDescription>Play a specific playlist</PlaylistActionDescription>
   <PlaylistActionPlaylist>Playlist</PlaylistActionPlaylist>
+  <PlaylistActionLibrary>Personal Library</PlaylistActionLibrary>
   <PlaylistActionTrack>Track</PlaylistActionTrack>
   <PlaylistActionSetPlaylist>Set playlist to</PlaylistActionSetPlaylist>
 

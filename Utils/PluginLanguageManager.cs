@@ -74,6 +74,7 @@ namespace Develeon64.SpotifyPlugin.Utils {
 		public string PlaylistActionName = "Play playlist";
 		public string PlaylistActionDescription = "Play a specific playlist";
 		public string PlaylistActionPlaylist = "Playlist";
+		public string PlaylistActionLibrary = "Personal Library";
 		public string PlaylistActionTrack = "Track";
 		public string PlaylistActionSetPlaylist = "Set playlist to";
 

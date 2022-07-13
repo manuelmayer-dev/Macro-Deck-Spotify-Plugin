@@ -21,7 +21,7 @@ namespace Develeon64.SpotifyPlugin.Views {
 			this.lblPlaylist.Text = PluginLanguageManager.PluginStrings.PlaylistActionPlaylist;
 			this.lblTrackNumber.Text = PluginLanguageManager.PluginStrings.PlaylistActionTrack;
 
-			this.cbxPlaylist.Items.Add("Library");
+			this.cbxPlaylist.Items.Add(PluginLanguageManager.PluginStrings.PlaylistActionLibrary);
 
 			this.playlists = await SpotifyHelper.GetPlaylists();
 			this.playlists.Sort((x, y) => x.Name.CompareTo(y.Name));
@@ -39,10 +39,9 @@ namespace Develeon64.SpotifyPlugin.Views {
 		}
 
 		private async void CbxPlaylist_SelectedIndexChanged (object sender, EventArgs e) {
-			if (this.cbxPlaylist.SelectedIndex > 0)
-				this.nupTrackNumber.Maximum = this.playlists[this.cbxPlaylist.SelectedIndex - 1].Tracks.Total ?? int.MaxValue;
-			else
-				this.nupTrackNumber.Maximum = (await SpotifyHelper.GetLibraryTracks()).Count;
+			this.nupTrackNumber.Maximum = this.cbxPlaylist.SelectedIndex > 0
+				? this.playlists[this.cbxPlaylist.SelectedIndex - 1].Tracks.Total ?? int.MaxValue
+				: (await SpotifyHelper.GetLibraryTracks()).Count;
 		}
 	}
 }
