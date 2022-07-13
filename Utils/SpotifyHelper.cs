@@ -355,6 +355,43 @@ namespace Develeon64.SpotifyPlugin.Utils {
 			}
 		}
 
+		public static async void PlayLibrary (int track = 0) {
+			try {
+				PlayerResumePlaybackRequest request = new PlayerResumePlaybackRequest() {
+					OffsetParam = new PlayerResumePlaybackRequest.Offset() { Position = track },
+					Uris = new List<string>(),
+				};
+				foreach (Device device in (await spotify.Player.GetAvailableDevices()).Devices) {
+					if (device.Name.ToLower() == Environment.MachineName.ToLower()) {
+						request.DeviceId = device.Id;
+						break;
+					}
+				}
+				foreach (SavedTrack t in await GetLibraryTracks())
+					request.Uris.Add(t.Track.Uri);
+				await spotify.Player.ResumePlayback(request);
+			}
+			catch (Exception ex) { }
+		}
+
+		public static async Task<List<SavedTrack>> GetLibraryTracks () {
+			List<SavedTrack> tracks = new List<SavedTrack>();
+			LibraryTracksRequest request = new LibraryTracksRequest() {
+				Limit = 50,
+				Offset = 0,
+			};
+
+			var response = await spotify.Library.GetTracks(request);
+			tracks.AddRange(response.Items);
+			while (response.Next != null) {
+				request.Offset += 50;
+				if (request.Offset > 100000) break;
+				response = await spotify.Library.GetTracks(request);
+				tracks.AddRange(response.Items);
+			}
+			return tracks;
+		}
+
 		public static async Task<List<SimplePlaylist>> GetPlaylists () {
 			List<SimplePlaylist> playlists = new List<SimplePlaylist>();
 			PlaylistCurrentUsersRequest request = new PlaylistCurrentUsersRequest() {
@@ -374,23 +411,16 @@ namespace Develeon64.SpotifyPlugin.Utils {
 		}
 
 		public static async void SetPlaylist (string id, int track = 0) {
-			PlayerResumePlaybackRequest resumeRequest = new PlayerResumePlaybackRequest() {
-				ContextUri = id,
-				OffsetParam = new PlayerResumePlaybackRequest.Offset() { Position = track },
-			};
 			try {
-				if (!Boolean.Parse(VariableManager.ListVariables.FirstOrDefault(v => v.Name.Equals("spotify_playing")).Value)) {
-					List<string> devices = new List<string>();
-					foreach (Device device in (await spotify.Player.GetAvailableDevices()).Devices) {
-						if (device.Name.ToLower() == Environment.MachineName.ToLower()) {
-							devices.Add(device.Id);
-							break;
-						}
+				PlayerResumePlaybackRequest resumeRequest = new PlayerResumePlaybackRequest() {
+					ContextUri = id,
+					OffsetParam = new PlayerResumePlaybackRequest.Offset() { Position = track },
+				};
+				foreach (Device device in (await spotify.Player.GetAvailableDevices()).Devices) {
+					if (device.Name.ToLower() == Environment.MachineName.ToLower()) {
+						resumeRequest.DeviceId = device.Id;
+						break;
 					}
-					PlayerTransferPlaybackRequest transferRequest = new PlayerTransferPlaybackRequest(devices) {
-						Play = false,
-					};
-					await spotify.Player.TransferPlayback(transferRequest);
 				}
 				await spotify.Player.ResumePlayback(resumeRequest);
 			}
