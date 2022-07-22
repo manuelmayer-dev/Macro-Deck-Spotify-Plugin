@@ -39,7 +39,8 @@ Control your Spotify-Player using Macro Deck 2
   The Tokens (Access and Refresh) will be filled into their fields automatically. After authorizing the app you can close your browser again and save the Configuration with "Ok".
 
 ## Helping with the translation
-All translation files are located under https://github.com/Develeon64/Macro-Deck-Spotify-Plugin/tree/main/Resources/Languages
+All translation files are located under:
+https://github.com/Develeon64/Macro-Deck-Spotify-Plugin/tree/main/Resources/Languages
 
 ### Adding/editing a translation file
 1. Fork this GitHub repository
