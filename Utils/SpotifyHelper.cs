@@ -4,6 +4,7 @@ using SpotifyAPI.Web.Auth;
 using SuchByte.MacroDeck.Logging;
 using SuchByte.MacroDeck.Plugins;
 using SuchByte.MacroDeck.Variables;
+using SuchByte.MacroDeck.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -55,64 +56,78 @@ namespace Develeon64.SpotifyPlugin.Utils {
 		}
 
 		public static void Connect (string token) {
-			if (token == null) return;
+			if (token == null)
+				return;
 
-			SpotifyClientConfig spotifyConfig = SpotifyClientConfig.CreateDefault(token);
-			spotify = new SpotifyClient(spotifyConfig);
+			try {
+				SpotifyClientConfig spotifyConfig = SpotifyClientConfig.CreateDefault(token);
+				spotify = new SpotifyClient(spotifyConfig);
+			}
+			catch (APIException ex) { OnApiError(ex); }
+			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 
 			ConnectionStateChanged.Invoke(null, EventArgs.Empty);
 			UpdateVars();
 		}
 
 		public static async void Authorize (string clientId) {
-			_clientId = clientId;
+			try {
+				_clientId = clientId;
 
-			_server = new EmbedIOAuthServer(callbackUri, callbackPort);
-			await _server.Start();
-			_server.AuthorizationCodeReceived += OnCodeReceived;
+				_server = new EmbedIOAuthServer(callbackUri, callbackPort);
+				await _server.Start();
+				_server.AuthorizationCodeReceived += OnCodeReceived;
 
-			var (verifier, challenge) = PKCEUtil.GenerateCodes();
-			_verifier = verifier;
+				var (verifier, challenge) = PKCEUtil.GenerateCodes();
+				_verifier = verifier;
 
-			LoginRequest login = new LoginRequest(_server.BaseUri, _clientId, LoginRequest.ResponseType.Code) {
-				CodeChallengeMethod = "S256",
-				CodeChallenge = challenge,
-				Scope = new List<string> {
-					Scopes.AppRemoteControl,
-					Scopes.PlaylistModifyPrivate,
-					Scopes.PlaylistModifyPublic,
-					Scopes.PlaylistReadCollaborative,
-					Scopes.PlaylistReadPrivate,
-					Scopes.Streaming,
-					Scopes.UgcImageUpload,
-					Scopes.UserFollowModify,
-					Scopes.UserFollowRead,
-					Scopes.UserLibraryModify,
-					Scopes.UserLibraryRead,
-					Scopes.UserModifyPlaybackState,
-					Scopes.UserReadCurrentlyPlaying,
-					Scopes.UserReadEmail,
-					Scopes.UserReadPlaybackPosition,
-					Scopes.UserReadPlaybackState,
-					Scopes.UserReadPrivate,
-					Scopes.UserReadRecentlyPlayed,
-					Scopes.UserTopRead,
-				}
-			};
+				LoginRequest login = new LoginRequest(_server.BaseUri, _clientId, LoginRequest.ResponseType.Code) {
+					CodeChallengeMethod = "S256",
+					CodeChallenge = challenge,
+					Scope = new List<string> {
+						Scopes.AppRemoteControl,
+						Scopes.PlaylistModifyPrivate,
+						Scopes.PlaylistModifyPublic,
+						Scopes.PlaylistReadCollaborative,
+						Scopes.PlaylistReadPrivate,
+						Scopes.Streaming,
+						Scopes.UgcImageUpload,
+						Scopes.UserFollowModify,
+						Scopes.UserFollowRead,
+						Scopes.UserLibraryModify,
+						Scopes.UserLibraryRead,
+						Scopes.UserModifyPlaybackState,
+						Scopes.UserReadCurrentlyPlaying,
+						Scopes.UserReadEmail,
+						Scopes.UserReadPlaybackPosition,
+						Scopes.UserReadPlaybackState,
+						Scopes.UserReadPrivate,
+						Scopes.UserReadRecentlyPlayed,
+						Scopes.UserTopRead,
+					}
+				};
 
-			BrowserUtil.Open(login.ToUri());
+				BrowserUtil.Open(login.ToUri());
+			}
+			catch (APIException ex) { OnApiError(ex); }
+			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 		}
 
 		public static void Disconnect () {
 			spotify = null;
-			ConnectionStateChanged.Invoke(null, EventArgs.Empty);
+			if (ConnectionStateChanged != null)
+				ConnectionStateChanged.Invoke(null, EventArgs.Empty);
 		}
 
 		private static async Task OnCodeReceived (object sender, AuthorizationCodeResponse response) {
-			await _server.Stop();
+			try {
+				await _server.Stop();
 
-			PKCETokenRequest request = new PKCETokenRequest(_clientId, response.Code, callbackUri, _verifier);
-			_token = await new OAuthClient().RequestToken(request);
+				PKCETokenRequest request = new PKCETokenRequest(_clientId, response.Code, callbackUri, _verifier);
+				_token = await new OAuthClient().RequestToken(request);
+			}
+			catch (APIException ex) { OnApiError(ex); }
+			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 
 			LoginSuccessful.Invoke(sender, new LoginCredentials(_token.AccessToken, _token.RefreshToken));
 		}
@@ -120,7 +135,8 @@ namespace Develeon64.SpotifyPlugin.Utils {
 		public static async void CheckTokenRefresh () {
 			if (_token == null || tokenExpire.Subtract(DateTime.Now).TotalMinutes < 5) {
 				LoginCredentials credentials = CredentialHelper.GetCredentials();
-				if (credentials == null || string.IsNullOrWhiteSpace(credentials.RefreshToken) || string.IsNullOrEmpty(_clientId)) return;
+				if (credentials == null || string.IsNullOrWhiteSpace(credentials.RefreshToken) || string.IsNullOrEmpty(_clientId))
+					return;
 
 				try {
 					PKCETokenRefreshRequest request = new PKCETokenRefreshRequest(_clientId, credentials.RefreshToken);
@@ -129,19 +145,16 @@ namespace Develeon64.SpotifyPlugin.Utils {
 					spotify = new SpotifyClient(config);
 					tokenExpire = DateTime.Now.AddSeconds(_token.ExpiresIn);
 				}
-				catch (APIException ex) {
-					MacroDeckLogger.Error(PluginInstance.Main, ex.Response.Body.ToString());
-				}
-				catch (Exception ex) {
-					MacroDeckLogger.Error(PluginInstance.Main, $"Error: {ex.Message}");
-				}
+				catch (APIException ex) { OnApiError(ex); }
+				catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 
 				CredentialHelper.UpdateCredentials(_token.AccessToken, _token.RefreshToken);
 			}
 		}
 
 		public static async void UpdateVars (bool wait = false) {
-			if (spotify == null) return;
+			if (spotify == null)
+				return;
 
 			try {
 				if (wait)
@@ -176,19 +189,15 @@ namespace Develeon64.SpotifyPlugin.Utils {
 					VariableManager.SetValue("spotify_playing", false, VariableType.Bool, PluginInstance.Main, null);
 				}
 			}
-			catch (APIException e) {
-				if (e.Response.StatusCode != System.Net.HttpStatusCode.Forbidden && ConnectionStateChanged != null) {
-					spotify = null;
-					ConnectionStateChanged(null, EventArgs.Empty);
-				}
+			catch (APIException ex) {
+				OnApiError(ex);
 			}
-			catch (Exception e) {
-				MacroDeckLogger.Error(PluginInstance.Main, "Error: " + e.Message + "\n" + e.StackTrace);
-			}
+			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 		}
 
 		public static async void SetPlaying (bool playing) {
-			if (spotify == null) return;
+			if (spotify == null)
+				return;
 
 			try {
 				if (playing)
@@ -196,113 +205,78 @@ namespace Develeon64.SpotifyPlugin.Utils {
 				else
 					await spotify.Player.PausePlayback();
 			}
-			catch (APIException e) {
-				if (e.Response.StatusCode != System.Net.HttpStatusCode.Forbidden && ConnectionStateChanged != null) {
-					spotify = null;
-					ConnectionStateChanged(null, EventArgs.Empty);
-				}
-			}
-			catch (Exception e) {
-				MacroDeckLogger.Error(PluginInstance.Main, "Error: " + e.Message + "\n" + e.StackTrace);
-			}
+			catch (APIException ex) { OnApiError(ex); }
+			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 
 			UpdateVars(true);
 		}
 
 		public static async void Skip () {
-			if (spotify == null) return;
+			if (spotify == null)
+				return;
 
 			try {
 				await spotify.Player.SkipNext();
 			}
-			catch (APIException e) {
-				if (e.Response.StatusCode != System.Net.HttpStatusCode.Forbidden && ConnectionStateChanged != null) {
-					spotify = null;
-					ConnectionStateChanged(null, EventArgs.Empty);
-				}
-			}
-			catch (Exception e) {
-				MacroDeckLogger.Error(PluginInstance.Main, "Error: " + e.Message + "\n" + e.StackTrace);
-			}
+			catch (APIException ex) { OnApiError(ex); }
+			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 
 			UpdateVars(true);
 		}
 
 		public static async void Previous () {
-			if (spotify == null) return;
+			if (spotify == null)
+				return;
 
 			try {
 				await spotify.Player.SkipPrevious();
 			}
-			catch (APIException e) {
-				if (e.Response.StatusCode != System.Net.HttpStatusCode.Forbidden && ConnectionStateChanged != null) {
-					spotify = null;
-					ConnectionStateChanged(null, EventArgs.Empty);
-				}
-			}
-			catch (Exception e) {
-				MacroDeckLogger.Error(PluginInstance.Main, "Error: " + e.Message + "\n" + e.StackTrace);
-			}
+			catch (APIException ex) { OnApiError(ex); }
+			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 
 			UpdateVars(true);
 		}
 
 		public static async void SetLoop (PlayerSetRepeatRequest.State state) {
-			if (spotify == null) return;
+			if (spotify == null)
+				return;
 
 			try {
 				await spotify.Player.SetRepeat(new PlayerSetRepeatRequest(state));
 			}
-			catch (APIException e) {
-				if (e.Response.StatusCode != System.Net.HttpStatusCode.Forbidden && ConnectionStateChanged != null) {
-					spotify = null;
-					ConnectionStateChanged(null, EventArgs.Empty);
-				}
-			}
-			catch (Exception e) {
-				MacroDeckLogger.Error(PluginInstance.Main, "Error: " + e.Message + "\n" + e.StackTrace);
-			}
+			catch (APIException ex) { OnApiError(ex); }
+			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 
 			UpdateVars(true);
 		}
 
 		public static async void SetShuffle (bool shuffle) {
-			if (spotify == null) return;
+			if (spotify == null)
+				return;
 
 			try {
 				await spotify.Player.SetShuffle(new PlayerShuffleRequest(shuffle));
 			}
-			catch (APIException e) {
-				if (e.Response.StatusCode != System.Net.HttpStatusCode.Forbidden && ConnectionStateChanged != null) {
-					spotify = null;
-					ConnectionStateChanged(null, EventArgs.Empty);
-				}
-			}
-			catch (Exception e) {
-				MacroDeckLogger.Error(PluginInstance.Main, "Error: " + e.Message + "\n" + e.StackTrace);
-			}
+			catch (APIException ex) { OnApiError(ex); }
+			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 
 			UpdateVars(true);
 		}
 
 		public static async void SetVolume (int volume) {
-			if (spotify == null) return;
+			if (spotify == null)
+				return;
 
 			try {
-				if (volume < 0) volume = 0;
-				if (volume > 100) volume = 100;
+				if (volume < 0)
+					volume = 0;
+				if (volume > 100)
+					volume = 100;
 
 				await spotify.Player.SetVolume(new PlayerVolumeRequest(volume));
 			}
-			catch (APIException e) {
-				if (e.Response.StatusCode != System.Net.HttpStatusCode.Forbidden && ConnectionStateChanged != null) {
-					spotify = null;
-					ConnectionStateChanged(null, EventArgs.Empty);
-				}
-			}
-			catch (Exception e) {
-				MacroDeckLogger.Error(PluginInstance.Main, "Error: " + e.Message + "\n" + e.StackTrace);
-			}
+			catch (APIException ex) { OnApiError(ex); }
+			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 
 			UpdateVars(true);
 		}
@@ -322,38 +296,53 @@ namespace Develeon64.SpotifyPlugin.Utils {
 
 		public static async void AddLibrary (FullTrack track = null) {
 			if (spotify != null && spotify.Player != null) {
-				if (track == null) {
-					PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
-					CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
-					if (playing == null) return;
-					track = (FullTrack)playing.Item;
+				try {
+					if (track == null) {
+						PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
+						CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
+						if (playing == null)
+							return;
+						track = (FullTrack)playing.Item;
+					}
+					await spotify.Library.SaveTracks(new LibrarySaveTracksRequest(new List<string>(new string[] { track.Id })));
 				}
-				await spotify.Library.SaveTracks(new LibrarySaveTracksRequest(new List<string>(new string[] { track.Id })));
+				catch (APIException ex) { OnApiError(ex); }
+				catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 			}
 		}
 
 		public static async void RemoveLibrary (FullTrack track = null) {
 			if (spotify != null && spotify.Player != null) {
-				if (track == null) {
-					PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
-					CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
-					if (playing == null) return;
-					track = (FullTrack)playing.Item;
+				try {
+					if (track == null) {
+						PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
+						CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
+						if (playing == null)
+							return;
+						track = (FullTrack)playing.Item;
+					}
+					await spotify.Library.RemoveTracks(new LibraryRemoveTracksRequest(new List<string>(new string[] { track.Id })));
 				}
-				await spotify.Library.RemoveTracks(new LibraryRemoveTracksRequest(new List<string>(new string[] { track.Id })));
+				catch (APIException ex) { OnApiError(ex); }
+				catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 			}
 		}
 
 		public static async void SwitchLibrary () {
 			if (spotify != null && spotify.Player != null) {
-				PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
-				CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
-				if (playing == null) return;
-				FullTrack track = (FullTrack)playing.Item;
-				if ((await spotify.Library.CheckTracks(new LibraryCheckTracksRequest(new List<string>(new string[] { track.Id }))))[0])
-					RemoveLibrary(track);
-				else
-					AddLibrary(track);
+				try {
+					PlayerCurrentlyPlayingRequest request = new PlayerCurrentlyPlayingRequest(PlayerCurrentlyPlayingRequest.AdditionalTypes.Track);
+					CurrentlyPlaying playing = await spotify.Player.GetCurrentlyPlaying(request);
+					if (playing == null)
+						return;
+					FullTrack track = (FullTrack)playing.Item;
+					if ((await spotify.Library.CheckTracks(new LibraryCheckTracksRequest(new List<string>(new string[] { track.Id }))))[0])
+						RemoveLibrary(track);
+					else
+						AddLibrary(track);
+				}
+				catch (APIException ex) { OnApiError(ex); }
+				catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 			}
 		}
 
@@ -373,41 +362,53 @@ namespace Develeon64.SpotifyPlugin.Utils {
 					request.Uris.Add(t.Track.Uri);
 				await spotify.Player.ResumePlayback(request);
 			}
-			catch (Exception ex) { }
+			catch (APIException ex) { OnApiError(ex); }
+			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 		}
 
 		public static async Task<List<SavedTrack>> GetLibraryTracks () {
 			List<SavedTrack> tracks = new List<SavedTrack>();
-			LibraryTracksRequest request = new LibraryTracksRequest() {
-				Limit = 50,
-				Offset = 0,
-			};
+			try {
+				LibraryTracksRequest request = new LibraryTracksRequest() {
+					Limit = 50,
+					Offset = 0,
+				};
 
-			var response = await spotify.Library.GetTracks(request);
-			tracks.AddRange(response.Items);
-			while (response.Next != null) {
-				request.Offset += 50;
-				if (request.Offset > 100000) break;
-				response = await spotify.Library.GetTracks(request);
+				var response = await spotify.Library.GetTracks(request);
 				tracks.AddRange(response.Items);
+				while (response.Next != null) {
+					request.Offset += 50;
+					if (request.Offset > 100000)
+						break;
+					response = await spotify.Library.GetTracks(request);
+					tracks.AddRange(response.Items);
+				}
 			}
+			catch (APIException ex) { OnApiError(ex); }
+			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
+
 			return tracks;
 		}
 
 		public static async Task<List<SimplePlaylist>> GetPlaylists () {
 			List<SimplePlaylist> playlists = new List<SimplePlaylist>();
-			PlaylistCurrentUsersRequest request = new PlaylistCurrentUsersRequest() {
-				Limit = 50,
-				Offset = 0,
-			};
-			var response = await spotify.Playlists.CurrentUsers(request);
-			playlists.AddRange(response.Items);
-			while (response.Next != null) {
-				request.Offset += 50;
-				if (request.Offset > 100000) break;
-				response = await spotify.Playlists.CurrentUsers(request);
+			try {
+				PlaylistCurrentUsersRequest request = new PlaylistCurrentUsersRequest() {
+					Limit = 50,
+					Offset = 0,
+				};
+				var response = await spotify.Playlists.CurrentUsers(request);
 				playlists.AddRange(response.Items);
+				while (response.Next != null) {
+					request.Offset += 50;
+					if (request.Offset > 100000)
+						break;
+					response = await spotify.Playlists.CurrentUsers(request);
+					playlists.AddRange(response.Items);
+				}
 			}
+			catch (APIException ex) { OnApiError(ex); }
+			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 
 			return playlists;
 		}
@@ -426,7 +427,32 @@ namespace Develeon64.SpotifyPlugin.Utils {
 				}
 				await spotify.Player.ResumePlayback(resumeRequest);
 			}
-			catch (Exception) { }
+			catch (APIException ex) { OnApiError(ex); }
+			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
+		}
+
+		private static void OnApiError (APIException ex) {
+			switch (ex.Response.StatusCode) {
+				case System.Net.HttpStatusCode.Forbidden:
+					if (ex.Message.ToLower().Contains("premium"))
+						NotificationManager.Notify(PluginInstance.Main, "Spotify-Premium required", "Unfortunately you need an active Spotify-Premium Abo to be able to control your player with Macro Deck.", false);
+					else
+						goto default;
+					break;
+				case System.Net.HttpStatusCode.NotFound:
+					if (ex.Response.Body.ToString().Contains("NO_ACTIVE_DEVICE"))
+						NotificationManager.Notify(PluginInstance.Main, "No Device", "Please start the playback on your device first.", false);
+					else
+						goto default;
+					break;
+				case System.Net.HttpStatusCode.TooManyRequests:
+					break;
+				case System.Net.HttpStatusCode.Unauthorized:
+				default:
+					MacroDeckLogger.Error(PluginInstance.Main, $"There was an Error with the Spotify-API: {ex.Response.Body}");
+					break;
+			}
+			SpotifyHelper.Disconnect();
 		}
 	}
 }
