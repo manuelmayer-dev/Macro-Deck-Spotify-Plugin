@@ -40,6 +40,7 @@ namespace Develeon64.SpotifyPlugin {
 				new LibraryActionAction(),
 			};
 
+			MacroDeck.OnMacroDeckLoaded += this.MacroDeck_OnMacroDeckLoaded;
 			MacroDeck.OnMainWindowLoad += this.MacroDeck_OnMainWindowLoad;
 			SpotifyHelper.ConnectionStateChanged += this.SpotifyHelper_ConnectionStateChanged;
 
@@ -47,6 +48,10 @@ namespace Develeon64.SpotifyPlugin {
 				this.MacroDeck_OnMainWindowLoad(MacroDeck.MainWindow, EventArgs.Empty);
 
 			SpotifyHelper.Connect(CredentialHelper.GetCredentials()?.AccessToken ?? null);
+		}
+
+		private void MacroDeck_OnMacroDeckLoaded (object sender, EventArgs e) {
+			this.SetUpdateTimer();
 		}
 
 		private void SetUpdateTimer () {
