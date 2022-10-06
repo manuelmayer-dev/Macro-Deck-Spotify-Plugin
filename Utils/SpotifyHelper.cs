@@ -7,6 +7,7 @@ using SuchByte.MacroDeck.Variables;
 using SuchByte.MacroDeck.Notifications;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -189,9 +190,7 @@ namespace Develeon64.SpotifyPlugin.Utils {
 					VariableManager.SetValue("spotify_playing", false, VariableType.Bool, PluginInstance.Main, null);
 				}
 			}
-			catch (APIException ex) {
-				OnApiError(ex);
-			}
+			catch (APIException ex) { OnApiError(ex); }
 			catch (Exception ex) { MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace); }
 		}
 
@@ -433,21 +432,22 @@ namespace Develeon64.SpotifyPlugin.Utils {
 
 		private static void OnApiError (APIException ex) {
 			switch (ex.Response.StatusCode) {
-				case System.Net.HttpStatusCode.Forbidden:
+				case HttpStatusCode.Forbidden:
 					if (ex.Message.ToLower().Contains("premium"))
 						NotificationManager.Notify(PluginInstance.Main, "Spotify-Premium required", "Unfortunately you need an active Spotify-Premium Abo to be able to control your player with Macro Deck.", false);
 					else
 						goto default;
 					break;
-				case System.Net.HttpStatusCode.NotFound:
+				case HttpStatusCode.NotFound:
 					if (ex.Response.Body.ToString().Contains("NO_ACTIVE_DEVICE"))
 						NotificationManager.Notify(PluginInstance.Main, "No Device", "Please start the playback on your device first.", false);
 					else
 						goto default;
 					break;
-				case System.Net.HttpStatusCode.TooManyRequests:
+				case HttpStatusCode.TooManyRequests:
+					NotificationManager.Notify(PluginInstance.Main, "Too many requests", "There were too many actions made in a short time. Please wait a minute and try again.", false);
 					break;
-				case System.Net.HttpStatusCode.Unauthorized:
+				case HttpStatusCode.Unauthorized:
 				default:
 					MacroDeckLogger.Error(PluginInstance.Main, $"There was an Error with the Spotify-API: {ex.Response.Body}");
 					break;
