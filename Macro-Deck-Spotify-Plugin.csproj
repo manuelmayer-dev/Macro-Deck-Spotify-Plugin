@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy /y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Users\Christian\AppData\Roaming\Macro Deck\plugins\Develeon64.SpotifyPlugin\$(TargetName).dll&quot;" />
+    <Exec Command="copy /y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Users\Manuel\AppData\Roaming\Macro Deck\plugins\Develeon64.SpotifyPlugin\$(TargetName).dll&quot;" />
   </Target>
 
   <ItemGroup>
@@ -30,6 +30,8 @@
   <ItemGroup>
     <Reference Include="Macro Deck 2">
       <HintPath>C:\Program Files\Macro Deck\Macro Deck 2.dll</HintPath>
+      <EmbedInteropTypes></EmbedInteropTypes>
+      <Private></Private>
     </Reference>
     <PackageReference Include="SpotifyAPI.Web" Version="6.2.2" />
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="6.2.2" />
