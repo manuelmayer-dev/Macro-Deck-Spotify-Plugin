@@ -57,7 +57,7 @@ namespace Develeon64.SpotifyPlugin.Windows
             if (num < 0) return;
             if (this.InvokeRequired)
             {
-                this.Invoke(new Action(() => SetPage(num)));
+                this.Invoke(() => SetPage(num));
                 return;
             }
             MacroDeckLogger.Trace(PluginInstance.Main, $"Set page no {num}");
@@ -67,14 +67,14 @@ namespace Develeon64.SpotifyPlugin.Windows
             pagePanel.Controls.Add(page ?? new WelcomePage());
             _currentPageNo = num;
             SetBackButtonVisible(num > 0);
-            SetForwardButtonVisible(num < _pages.Count - 1);
+            SetForwardButtonVisible(num < _pages.Count - 2);
         }
 
         private void SetBackButtonVisible(bool visible)
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(new Action(() => SetBackButtonVisible(visible)));
+                this.Invoke(() => SetBackButtonVisible(visible));
                 return;
             }
             this.btnBack.Visible = visible;
@@ -83,7 +83,7 @@ namespace Develeon64.SpotifyPlugin.Windows
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(new Action(() => SetForwardButtonVisible(visible)));
+                this.Invoke(() => SetForwardButtonVisible(visible));
                 return;
             }
             this.btnForward.Visible = visible;

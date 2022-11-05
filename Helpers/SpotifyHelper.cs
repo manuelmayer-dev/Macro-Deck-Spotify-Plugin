@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Develeon64.SpotifyPlugin.Constants;
 using Develeon64.SpotifyPlugin.Utils;
 
 namespace Develeon64.SpotifyPlugin.Helpers
@@ -34,7 +35,7 @@ namespace Develeon64.SpotifyPlugin.Helpers
 
         public static bool IsPlaying
         {
-            get => bool.Parse(VariableManager.ListVariables.FirstOrDefault(v => v.Name.Equals("spotify_playing")).Value);
+            get => bool.Parse(VariableManager.Variables.FirstOrDefault(v => v.Name.Equals("spotify_playing"))?.Value ?? string.Empty);
             set => SetPlaying(value);
         }
 
@@ -42,7 +43,7 @@ namespace Develeon64.SpotifyPlugin.Helpers
         {
             get
             {
-                Enum.TryParse(typeof(PlayerSetRepeatRequest.State), VariableManager.ListVariables.FirstOrDefault(v => v.Name.Equals("spotify_playing_loop")).Value, out var mode);
+                Enum.TryParse(typeof(PlayerSetRepeatRequest.State), VariableManager.Variables.FirstOrDefault(v => v.Name.Equals("spotify_playing_loop"))?.Value, out var mode);
                 return (PlayerSetRepeatRequest.State?)mode ?? PlayerSetRepeatRequest.State.Off;
             }
             set => SetLoop(value);
@@ -50,12 +51,12 @@ namespace Develeon64.SpotifyPlugin.Helpers
 
         public static bool IsShuffle
         {
-            get => bool.Parse(VariableManager.ListVariables.FirstOrDefault(v => v.Name.Equals("spotify_playing_shuffle")).Value);
+            get => bool.Parse(VariableManager.Variables.FirstOrDefault(v => v.Name.Equals("spotify_playing_shuffle"))?.Value ?? string.Empty);
             set => SetShuffle(value);
         }
         public static int Volume
         {
-            get => int.Parse(VariableManager.ListVariables.FirstOrDefault(v => v.Name.Equals("spotify_playing_volume")).Value);
+            get => int.Parse(VariableManager.Variables.FirstOrDefault(v => v.Name.Equals("spotify_playing_volume"))?.Value ?? string.Empty);
             set => SetVolume(value);
         }
 
@@ -87,9 +88,9 @@ namespace Develeon64.SpotifyPlugin.Helpers
                 {
                     OnApiError(ex);
                 }
-                catch (Exception ex)
+                catch
                 {
-                    MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace);
+                    // ignored
                 }
 
                 ConnectionStateChanged?.Invoke(null, EventArgs.Empty);
@@ -216,54 +217,34 @@ namespace Develeon64.SpotifyPlugin.Helpers
                 if (wait)
                     Thread.Sleep(200);
 
-                var item = await _spotify.Player.GetCurrentPlayback();
+                var item = await _spotify?.Player?.GetCurrentPlayback();
                 if (item == null) return;
                 if (item.Item is FullTrack track)
                 {
                     var artists = track.Artists.Aggregate("", (current, artist) => current + ", " + artist.Name);
                     artists = artists[2..];
 
-                    VariableManager.SetValue("spotify_playing_shuffle", item.ShuffleState, VariableType.Bool,
-                        PluginInstance.Main, null);
-                    VariableManager.SetValue("spotify_playing_loop",
-                        item.RepeatState[..1].ToUpper() + item.RepeatState.Substring(1), VariableType.String,
-                        PluginInstance.Main, null);
-                    VariableManager.SetValue("spotify_playing_volume", item.Device.VolumePercent, VariableType.Integer,
-                        PluginInstance.Main, null);
-                    VariableManager.SetValue("spotify_track_in_library",
-                        (await _spotify.Library.CheckTracks(
-                            new LibraryCheckTracksRequest(new List<string>(new string[] { track.Id }))))[0],
-                        VariableType.Bool, PluginInstance.Main, null);
-                    VariableManager.SetValue("spotify_playing_artists", artists, VariableType.String,
-                        PluginInstance.Main, null);
-                    VariableManager.SetValue("spotify_playing_album", track.Album.Name, VariableType.String,
-                        PluginInstance.Main, null);
-                    VariableManager.SetValue("spotify_playing_title", track.Name, VariableType.String,
-                        PluginInstance.Main, null);
-                    VariableManager.SetValue("spotify_playing_link", track.ExternalUrls["spotify"], VariableType.String,
-                        PluginInstance.Main, null);
-                    VariableManager.SetValue("spotify_playing", item.IsPlaying, VariableType.Bool, PluginInstance.Main,
-                        null);
+                    VariableManager.SetValue(VariableNames.PlayingShuffle, item.ShuffleState, VariableType.Bool, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.PlayingLoop, item.RepeatState[..1].ToUpper() + item.RepeatState[1..], VariableType.String, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.PlayingVolume, item?.Device?.VolumePercent ?? 0, VariableType.Integer, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.TrackInLibrary, (await _spotify?.Library?.CheckTracks(new LibraryCheckTracksRequest(new List<string>(new string[] { track.Id }))))?[0] ?? false, VariableType.Bool, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.PlayingArtists, artists, VariableType.String, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.PlayingAlbum, track.Album.Name, VariableType.String, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.PlayingTitle, track.Name, VariableType.String, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.PlayingLink, track.ExternalUrls["spotify"], VariableType.String, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.IsPlaying, item.IsPlaying, VariableType.Bool, PluginInstance.Main);
                 }
                 else
                 {
-                    VariableManager.SetValue("spotify_playing_shuffle", false, VariableType.Bool, PluginInstance.Main,
-                        null);
-                    VariableManager.SetValue("spotify_playing_loop", "Off", VariableType.String, PluginInstance.Main,
-                        null);
-                    VariableManager.SetValue("spotify_playing_volume", 100, VariableType.Integer, PluginInstance.Main,
-                        null);
-                    VariableManager.SetValue("spotify_track_in_library", false, VariableType.Bool, PluginInstance.Main,
-                        null);
-                    VariableManager.SetValue("spotify_playing_artists", "", VariableType.String, PluginInstance.Main,
-                        null);
-                    VariableManager.SetValue("spotify_playing_album", "", VariableType.String, PluginInstance.Main,
-                        null);
-                    VariableManager.SetValue("spotify_playing_title", "", VariableType.String, PluginInstance.Main,
-                        null);
-                    VariableManager.SetValue("spotify_playing_link", "https://open.spotify.com/track/",
-                        VariableType.String, PluginInstance.Main, null);
-                    VariableManager.SetValue("spotify_playing", false, VariableType.Bool, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.PlayingShuffle, false, VariableType.Bool, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.PlayingLoop, "Off", VariableType.String, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.PlayingVolume, 100, VariableType.Integer, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.TrackInLibrary, false, VariableType.Bool, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.PlayingArtists, "", VariableType.String, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.PlayingAlbum, "", VariableType.String, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.PlayingTitle, "", VariableType.String, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.PlayingLink, "https://open.spotify.com/track/", VariableType.String, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.IsPlaying, false, VariableType.Bool, PluginInstance.Main, null);
                 }
             }
             catch (APIException ex)
@@ -409,19 +390,7 @@ namespace Develeon64.SpotifyPlugin.Helpers
 
             UpdateVars(true);
         }
-
-        public static async void SetLibrary(bool add)
-        {
-            if (add)
-            {
-                AddLibrary();
-            }
-            else
-            {
-                RemoveLibrary();
-            }
-        }
-
+        
         public static async void AddLibrary(FullTrack track = null)
         {
             if (_spotify == null) return;
@@ -656,19 +625,16 @@ namespace Develeon64.SpotifyPlugin.Helpers
                         false);
                     break;
                 case HttpStatusCode.Unauthorized:
-                    NotificationManager.Notify(PluginInstance.Main, "Unauthorized",
-                        "The Spotify api token seems to be expired. Please try to restart Macro Deck.",
-                        true);
+                    MacroDeckLogger.Warning(PluginInstance.Main, "The Spotify api token is expired. The plugin will try to renew the token.");
                     break;
                 case HttpStatusCode.ServiceUnavailable:
                     MacroDeckLogger.Warning(PluginInstance.Main, "The Spotify api service is temporarily unavailable. Please wait a minute and try again.");
                     break;
                 default:
-                    MacroDeckLogger.Error(PluginInstance.Main,
-                        $"There was an Error with the Spotify-API: {ex.Response.Body}");
+                    MacroDeckLogger.Warning(PluginInstance.Main,
+                        $"There was an Error with the Spotify-API ({ex.Response.StatusCode}): {ex.Response.Body}");
                     break;
             }
-            //Disconnect();
         }
     }
 }
