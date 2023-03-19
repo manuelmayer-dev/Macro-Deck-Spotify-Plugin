@@ -74,4 +74,34 @@
   <LibraryActionRemove>Remove</LibraryActionRemove>
   <LibraryActionAdd>Add</LibraryActionAdd>
   <LibraryActionToggle>Toggle</LibraryActionToggle>
+
+	<WelcomeToSpotifyPlugin>Welcome to the Spotify plugin for Macro Deck!</WelcomeToSpotifyPlugin>
+	<InThisWizardYouCreateSpotifyApp>In this wizard, you'll create a Spotify app to get the required credentials but don't worry. You'll be guided through this process.</InThisWizardYouCreateSpotifyApp>
+	<YouNeedASpotifyDevAccount>First of all, you need a Spotify developer account. This account is automatically generated when you login to the Spotify developer portal with your Spotify credentials.</YouNeedASpotifyDevAccount>
+	<OpenSpotifyDeveloperPortal>Open Spotify Developer Portal</OpenSpotifyDeveloperPortal>
+	<ContinueAfterLoggedIn>Continue with the next page after you're logged in to the Spotify developer account</ContinueAfterLoggedIn>
+	<YouNeedAddRedirectUri>In the settings, you need to add "http://localhost:5000/callback" to the Redirect URIs.</YouNeedAddRedirectUri>
+	<CopyRedirectUriClipboard>Copy Redirect URI to clipboard</CopyRedirectUriClipboard>
+	<AfterPastedUriClickSave>After you pasted the uri and clicked on "Add", you can click "Save" and continue with the next page.</AfterPastedUriClickSave>
+	<AfterCreatedDevAccount>After you created and logged in to the Spotify developer account, you'll be redirected to the dashboard.
+
+		Now click on "Create an App" and continue with the next page.</AfterCreatedDevAccount>
+	<AfterCreatedApp>After you created the app, you'll be redirected to the app's overview.
+
+		Now click on "Edit Settings" and continue with the next page.</AfterCreatedApp>
+	<FillInAppDetails>Now fill in the app details as on the picture and click on "Create".
+		
+		After that, continue with the next page.</FillInAppDetails>
+	<CopyClientIdAndPaste>Now you're on the overview page of your created app. Copy the "Client ID" and paste it in the textbox below</CopyClientIdAndPaste>
+	<PasteTheCopiedClientIdHere>Paste the copied Client ID here</PasteTheCopiedClientIdHere>
+	<Authorize>Authorize</Authorize>
+	<PluginConfigurationWelcomeUser>Welcome {0} 
+		Your Spotify account is now connected to Macro Deck!</PluginConfigurationWelcomeUser>
+	<LimitedFunctionality>Limited functionality</LimitedFunctionality>
+	<LoggedInFreeSpotifyAccount>You logged-in using a free Spotify account. Due to limited access for non-premium users, you cannot control Spotify using Macro Deck. Variables are updated anyways.
+		
+		Please note that this restriction comes from Spotify itself and is not caused by Macro Deck.</LoggedInFreeSpotifyAccount>
+	<Done>Done</Done>
+
+
 </PluginStrings>

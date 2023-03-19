@@ -3,7 +3,7 @@
     <Authors>Develeon64</Authors>
     <Copyright>Develeon64</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0-windows10.0.22000.0</TargetFramework>
     <RootNamespace>Develeon64.SpotifyPlugin</RootNamespace>
     <Version>1.2.1</Version>
     <FileVersion>1.2.1.0</FileVersion>
@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy /y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Users\Christian\AppData\Roaming\Macro Deck\plugins\Develeon64.SpotifyPlugin\$(TargetName).dll&quot;" />
+    <Exec Command="copy /y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Users\Manuel\AppData\Roaming\Macro Deck\plugins\Develeon64.SpotifyPlugin\$(TargetName).dll&quot;" />
   </Target>
 
   <ItemGroup>
@@ -28,13 +28,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Macro Deck 2">
-      <HintPath>C:\Program Files\Macro Deck\Macro Deck 2.dll</HintPath>
-    </Reference>
     <PackageReference Include="SpotifyAPI.Web" Version="6.2.2" />
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="6.2.2" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Macro Deck 2">
+      <HintPath>..\Macro-Deck-WinForms\MacroDeck\bin\Debug\net6.0-windows10.0.22000.0\win-x64\Macro Deck 2.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
@@ -43,12 +46,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Views\LoopActionConfigView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Views\LibraryActionConfigView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Update="Views\LoopActionConfigView.cs" />
+    <Compile Update="Views\LibraryActionConfigView.cs" />
   </ItemGroup>
 
   <ItemGroup>

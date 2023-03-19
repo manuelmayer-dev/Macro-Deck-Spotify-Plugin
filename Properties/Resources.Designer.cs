@@ -63,6 +63,26 @@ namespace Develeon64.SpotifyPlugin.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap arrow_left_thick {
+            get {
+                object obj = ResourceManager.GetObject("arrow-left-thick", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrow_right_thick {
+            get {
+                object obj = ResourceManager.GetObject("arrow-right-thick", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Spotify_Connected {
             get {
                 object obj = ResourceManager.GetObject("Spotify_Connected", resourceCulture);
@@ -76,6 +96,56 @@ namespace Develeon64.SpotifyPlugin.Properties {
         internal static System.Drawing.Bitmap Spotify_Disconnected {
             get {
                 object obj = ResourceManager.GetObject("Spotify_Disconnected", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Step1 {
+            get {
+                object obj = ResourceManager.GetObject("Step1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Step2 {
+            get {
+                object obj = ResourceManager.GetObject("Step2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Step3 {
+            get {
+                object obj = ResourceManager.GetObject("Step3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Step4 {
+            get {
+                object obj = ResourceManager.GetObject("Step4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Step5 {
+            get {
+                object obj = ResourceManager.GetObject("Step5", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

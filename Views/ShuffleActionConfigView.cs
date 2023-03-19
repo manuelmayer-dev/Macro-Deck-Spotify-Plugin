@@ -1,11 +1,12 @@
-﻿using Develeon64.SpotifyPlugin.Utils;
+﻿using Develeon64.SpotifyPlugin.Managers;
 using Develeon64.SpotifyPlugin.ViewModels;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using SuchByte.MacroDeck.Plugins;
 using System;
 
-namespace Develeon64.SpotifyPlugin.Views {
-	public partial class ShuffleActionConfigView : ActionConfigControl {
+namespace Develeon64.SpotifyPlugin.Views
+{
+    public partial class ShuffleActionConfigView : ActionConfigControl {
 		private readonly ShuffleActionConfigViewModel _viewModel;
 
 		public ShuffleActionConfigView (PluginAction action) {

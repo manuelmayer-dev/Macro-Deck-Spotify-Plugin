@@ -1,13 +1,14 @@
-﻿using Develeon64.SpotifyPlugin.Models;
-using Develeon64.SpotifyPlugin.Utils;
+﻿using Develeon64.SpotifyPlugin.Managers;
+using Develeon64.SpotifyPlugin.Models;
 using SuchByte.MacroDeck.Logging;
 using SuchByte.MacroDeck.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Develeon64.SpotifyPlugin.ViewModels {
-	internal class VolumeActionConfigViewModel : ISerializableConfigViewModel {
+namespace Develeon64.SpotifyPlugin.ViewModels
+{
+    internal class VolumeActionConfigViewModel : ISerializableConfigViewModel {
 		public readonly PluginAction _action;
 		public VolumeActionConfigModel Configuration { get; set; }
 		ISerializableConfiguration ISerializableConfigViewModel.SerializableConfiguration => Configuration;

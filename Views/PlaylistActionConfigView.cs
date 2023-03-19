@@ -1,4 +1,5 @@
-﻿using Develeon64.SpotifyPlugin.Utils;
+﻿using Develeon64.SpotifyPlugin.Helpers;
+using Develeon64.SpotifyPlugin.Managers;
 using Develeon64.SpotifyPlugin.ViewModels;
 using SpotifyAPI.Web;
 using SuchByte.MacroDeck.GUI.CustomControls;
@@ -7,8 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Develeon64.SpotifyPlugin.Views {
-	public partial class PlaylistActionConfigView : ActionConfigControl {
+namespace Develeon64.SpotifyPlugin.Views
+{
+    public partial class PlaylistActionConfigView : ActionConfigControl {
 		private readonly PlaylistActionConfigViewModel _viewModel;
 		private List<SimplePlaylist> playlists;
 
