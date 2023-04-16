@@ -1,11 +1,12 @@
-﻿using Develeon64.SpotifyPlugin.Utils;
+﻿using Develeon64.SpotifyPlugin.Managers;
 using Develeon64.SpotifyPlugin.ViewModels;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using SuchByte.MacroDeck.Plugins;
 using System;
 
-namespace Develeon64.SpotifyPlugin.Views {
-	public partial class VolumeActionConfigView : ActionConfigControl {
+namespace Develeon64.SpotifyPlugin.Views
+{
+    public partial class VolumeActionConfigView : ActionConfigControl {
 		private readonly VolumeActionConfigViewModel _viewModel;
 
 		public VolumeActionConfigView (PluginAction action) {

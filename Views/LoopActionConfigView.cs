@@ -1,11 +1,12 @@
-﻿using Develeon64.SpotifyPlugin.Utils;
+﻿using Develeon64.SpotifyPlugin.Managers;
 using Develeon64.SpotifyPlugin.ViewModels;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using SuchByte.MacroDeck.Plugins;
 using System;
 
-namespace Develeon64.SpotifyPlugin.Views {
-	public partial class LoopActionConfigView : ActionConfigControl {
+namespace Develeon64.SpotifyPlugin.Views
+{
+    public partial class LoopActionConfigView : ActionConfigControl {
 		private readonly LoopActionConfigViewModel _viewModel;
 
 		public LoopActionConfigView (PluginAction action) {

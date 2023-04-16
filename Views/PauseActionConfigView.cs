@@ -1,11 +1,12 @@
-﻿using Develeon64.SpotifyPlugin.Utils;
+﻿using Develeon64.SpotifyPlugin.Managers;
 using Develeon64.SpotifyPlugin.ViewModels;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using SuchByte.MacroDeck.Plugins;
 using System;
 
-namespace Develeon64.SpotifyPlugin.Views {
-	public partial class PauseActionConfigView : ActionConfigControl {
+namespace Develeon64.SpotifyPlugin.Views
+{
+    public partial class PauseActionConfigView : ActionConfigControl {
 		private readonly PauseActionConfigViewModel _viewModel;
 
 		public PauseActionConfigView (PluginAction action) {

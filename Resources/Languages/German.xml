@@ -74,4 +74,40 @@
   <ShuffleActionRemove>Entfernen</ShuffleActionRemove>
   <ShuffleActionAdd>Hinzufügen</ShuffleActionAdd>
   <ShuffleActionToggle>Umschalten</ShuffleActionToggle>
+
+	<WelcomeToSpotifyPlugin>Willkommen zum Spotify Plugin für Macro Deck!</WelcomeToSpotifyPlugin>
+	<InThisWizardYouCreateSpotifyApp>In diesem Einrichtungsassistenten wirst du eine Spotify App erstellen um die Nötigen Anmeldeinformationen zu bekommen. Keine Sorge, der Assistent begleitet dich Schritt für Schritt.</InThisWizardYouCreateSpotifyApp>
+	<YouNeedASpotifyDevAccount>Zuerst benötigst du einen Spotify Developer Account. Dieser wird erstellt, wenn du dich im Spotify Developer Portal mit deinen Spotify Anmeldedaten anmeldest.</YouNeedASpotifyDevAccount>
+	<OpenSpotifyDeveloperPortal>Spotify Developer Portal öffnen</OpenSpotifyDeveloperPortal>
+	<ContinueAfterLoggedIn>Fahre auf der nächsten Seite fort, wenn du dich im Developer Portal angemeldet hast.</ContinueAfterLoggedIn>
+	<YouNeedAddRedirectUri>Du musst in den Einstellungen "http://localhost:5000/callback" zu den Redirect URIs hinzufügen.</YouNeedAddRedirectUri>
+	<CopyRedirectUriClipboard>Redirect URI kopieren</CopyRedirectUriClipboard>
+	<AfterPastedUriClickSave>Nachdem du die URI eingefügt hast, klick auf "Add". Danach kannst du auf "Save" klicken und auf der nächsten Seite fortfahren.</AfterPastedUriClickSave>
+	<AfterCreatedDevAccount>
+		Nachdem du den Developer Account erstellt hast, wirst du auf das Dashboard weitergeleitet.
+
+		Klicke nun auf "Create an App" und fahre mit der nächsten Seite fort.
+	</AfterCreatedDevAccount>
+	<AfterCreatedApp>
+		Nachdem du die App erstellt hast, wirst du auf die Übersichtsseite der App weitergeleitet.
+
+		Klicke nun auf "Edit Settings" und fahre mit der nächsten Seite fort.
+	</AfterCreatedApp>
+	<FillInAppDetails>
+		Fülle nun die Felder wie auf dem Bild aus und klicke auf "Create".
+
+		Danach kannst du mit der nächsten Seite fortfahren.
+	</FillInAppDetails>
+	<CopyClientIdAndPaste>Du bist nun auf der Übersichtsseite deiner Spotify App. Kopiere die "Client ID" und füge sie in die Textbox unterhalb ein.</CopyClientIdAndPaste>
+	<PasteTheCopiedClientIdHere>Kopierte Client ID hier einfügen</PasteTheCopiedClientIdHere>
+	<Authorize>Authorisieren</Authorize>
+	<PluginConfigurationWelcomeUser>Willkommen {0}
+		Dein Spotify Account ist nun mit Macro Deck verbunden!</PluginConfigurationWelcomeUser>
+	<LimitedFunctionality>Eingeschränkter Funktionsumfang</LimitedFunctionality>
+	<LoggedInFreeSpotifyAccount>
+		Du bist mit einem Spotify-free Account angemeldet. Aufgrund von Beschränkungen seitens Spotify, kannst du Spotify nicht mit Macro Deck steuern. Variablen werden trotzdem aktualisiert.
+
+		Bitte beachte dass diese Beschränkung von Spotify selber kommt und nicht von Macro Deck.
+	</LoggedInFreeSpotifyAccount>
+	<Done>Fertig</Done>
 </PluginStrings>
