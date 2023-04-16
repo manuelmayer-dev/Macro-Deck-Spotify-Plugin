@@ -23,12 +23,12 @@ namespace Develeon64.SpotifyPlugin
 
         public const uint TimerIntervalMs = 1000 * 2;
 
-        private ToolTip _statusToolTip = new();
-        private ContentSelectorButton _statusButton = new();
+        private ToolTip _statusToolTip = new ToolTip();
+        private ContentSelectorButton _statusButton = new ContentSelectorButton();
 
 		private MainWindow _mainWindow;
 
-        private readonly Timer _timer = new()
+        private readonly Timer _timer = new Timer()
         {
 			Interval = TimerIntervalMs,
 			Enabled = false,
@@ -113,10 +113,10 @@ namespace Develeon64.SpotifyPlugin
             if (this._mainWindow == null || this._mainWindow.IsDisposed || this._statusButton == null ||
                 this._statusButton.IsDisposed) return;
 			
-            this._mainWindow.Invoke(() => {
+            this._mainWindow.Invoke(new Action(() => {
                 this._statusButton.BackgroundImage = SpotifyHelper.IsConnected ? Properties.Resources.Spotify_Connected : Properties.Resources.Spotify_Disconnected;
                 this._statusToolTip.SetToolTip(this._statusButton, "Spotify " + (SpotifyHelper.IsConnected ? $"Connected ({SpotifyHelper.UserName})" : "Disconnected"));
-            });
+            }));
         }
 
 		public override void OpenConfigurator ()

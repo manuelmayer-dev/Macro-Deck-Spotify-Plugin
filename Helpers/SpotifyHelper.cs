@@ -224,26 +224,26 @@ namespace Develeon64.SpotifyPlugin.Helpers
                     var artists = track.Artists.Aggregate("", (current, artist) => current + ", " + artist.Name);
                     artists = artists[2..];
 
-                    VariableManager.SetValue(VariableNames.PlayingShuffle, item.ShuffleState, VariableType.Bool, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.PlayingLoop, item.RepeatState[..1].ToUpper() + item.RepeatState[1..], VariableType.String, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.PlayingVolume, item?.Device?.VolumePercent ?? 0, VariableType.Integer, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.TrackInLibrary, (await _spotify?.Library?.CheckTracks(new LibraryCheckTracksRequest(new List<string>(new string[] { track.Id }))))?[0] ?? false, VariableType.Bool, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.PlayingArtists, artists, VariableType.String, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.PlayingAlbum, track.Album.Name, VariableType.String, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.PlayingTitle, track.Name, VariableType.String, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.PlayingLink, track.ExternalUrls["spotify"], VariableType.String, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.IsPlaying, item.IsPlaying, VariableType.Bool, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.PlayingShuffle, item.ShuffleState, VariableType.Bool, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.PlayingLoop, item.RepeatState[..1].ToUpper() + item.RepeatState[1..], VariableType.String, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.PlayingVolume, item?.Device?.VolumePercent ?? 0, VariableType.Integer, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.TrackInLibrary, (await _spotify?.Library?.CheckTracks(new LibraryCheckTracksRequest(new List<string>(new string[] { track.Id }))))?[0] ?? false, VariableType.Bool, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.PlayingArtists, artists, VariableType.String, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.PlayingAlbum, track.Album.Name, VariableType.String, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.PlayingTitle, track.Name, VariableType.String, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.PlayingLink, track.ExternalUrls["spotify"], VariableType.String, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.IsPlaying, item.IsPlaying, VariableType.Bool, PluginInstance.Main, null);
                 }
                 else
                 {
-                    VariableManager.SetValue(VariableNames.PlayingShuffle, false, VariableType.Bool, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.PlayingLoop, "Off", VariableType.String, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.PlayingVolume, 100, VariableType.Integer, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.TrackInLibrary, false, VariableType.Bool, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.PlayingArtists, "", VariableType.String, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.PlayingAlbum, "", VariableType.String, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.PlayingTitle, "", VariableType.String, PluginInstance.Main);
-                    VariableManager.SetValue(VariableNames.PlayingLink, "https://open.spotify.com/track/", VariableType.String, PluginInstance.Main);
+                    VariableManager.SetValue(VariableNames.PlayingShuffle, false, VariableType.Bool, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.PlayingLoop, "Off", VariableType.String, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.PlayingVolume, 100, VariableType.Integer, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.TrackInLibrary, false, VariableType.Bool, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.PlayingArtists, "", VariableType.String, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.PlayingAlbum, "", VariableType.String, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.PlayingTitle, "", VariableType.String, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.PlayingLink, "https://open.spotify.com/track/", VariableType.String, PluginInstance.Main, null);
                     VariableManager.SetValue(VariableNames.IsPlaying, false, VariableType.Bool, PluginInstance.Main, null);
                 }
             }
