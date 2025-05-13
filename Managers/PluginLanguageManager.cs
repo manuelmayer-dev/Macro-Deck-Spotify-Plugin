@@ -128,7 +128,7 @@ namespace Develeon64.SpotifyPlugin.Managers
         public string YouNeedASpotifyDevAccount = "First of all, you need a Spotify developer account. This account is automatically generated when you login to the Spotify developer portal with your Spotify credentials.";
         public string OpenSpotifyDeveloperPortal = "Open Spotify Developer Portal";
         public string ContinueAfterLoggedIn = "Continue with the next page after you're logged in to the Spotify developer account";
-        public string YouNeedAddRedirectUri = "In the settings, you need to add \"http://localhost:5000/callback\" to the Redirect URIs.";
+        public string YouNeedAddRedirectUri = "In the settings, you need to add \"http://127.0.0.1:5000/callback\" to the Redirect URIs.";
         public string CopyRedirectUriClipboard = "Copy Redirect URI to clipboard";
         public string AfterPastedUriClickSave = "After you pasted the uri and clicked on \"Add\", you can click \"Save\" and continue with the next page.";
         public string AfterCreatedDevAccount = "After you created and logged in to the Spotify developer account, you'll be redirected to the dashboard.\r\n\r\nNow click on \"Create an App\" and continue with the next page.";
