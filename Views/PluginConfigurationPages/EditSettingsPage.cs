@@ -22,7 +22,7 @@ namespace Develeon64.SpotifyPlugin.Views.PluginConfigurationPages
 
         private void BtnCopyRedirectUri_Click(object sender, EventArgs e)
         {
-            WindowsClipboard.SetText("http://localhost:5000/callback");
+            WindowsClipboard.SetText("http://127.0.0.1:5000/callback");
         }
     }
 }
