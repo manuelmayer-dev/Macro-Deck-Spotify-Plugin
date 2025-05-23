@@ -12,22 +12,22 @@ namespace Develeon64.SpotifyPlugin.ViewModels
 		ISerializableConfiguration ISerializableConfigViewModel.SerializableConfiguration => Configuration;
 
 		public PlaylistActionConfigViewModel (PluginAction action) {
-			this._action = action;
-			this.Configuration = PlaylistActionConfigModel.Deserialize(this._action.Configuration);
+			_action = action;
+			Configuration = PlaylistActionConfigModel.Deserialize(_action.Configuration);
 		}
 
 		public void SetConfig () {
-			this._action.ConfigurationSummary = $"{PluginLanguageManager.PluginStrings.PlaylistActionSetPlaylist}: {this.Configuration.Name} ({PluginLanguageManager.PluginStrings.PlaylistActionTrack} {this.Configuration.Track + 1}) [{this.Configuration.Uri}]";
-			this._action.Configuration = this.Configuration.Serialize();
+			_action.ConfigurationSummary = $"{PluginLanguageManager.PluginStrings.PlaylistActionSetPlaylist}: {Configuration.Name} ({PluginLanguageManager.PluginStrings.PlaylistActionTrack} {Configuration.Track + 1}) [{Configuration.Uri}]";
+			_action.Configuration = Configuration.Serialize();
 		}
 
 		public bool SaveConfig () {
 			try {
-				this.SetConfig();
-				MacroDeckLogger.Info(PluginInstance.Main, $"{this.GetType().Name}: config saved");
+				SetConfig();
+				MacroDeckLogger.Info(PluginInstance.Main, $"{GetType().Name}: config saved");
 			}
 			catch (Exception e) {
-				MacroDeckLogger.Error(PluginInstance.Main, $"{this.GetType().Name}: Error while saving Config: {e.Message}\n{e.StackTrace}");
+				MacroDeckLogger.Error(PluginInstance.Main, $"{GetType().Name}: Error while saving Config: {e.Message}\n{e.StackTrace}");
 			}
 			return true;
 		}

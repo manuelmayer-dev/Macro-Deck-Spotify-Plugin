@@ -48,7 +48,6 @@ namespace Develeon64.SpotifyPlugin.Views {
 			this.cbxPlaylist.SelectedItem = null;
 			this.cbxPlaylist.Size = new System.Drawing.Size(250, 26);
 			this.cbxPlaylist.TabIndex = 0;
-			this.cbxPlaylist.SelectedIndexChanged += new System.EventHandler(this.CbxPlaylist_SelectedIndexChanged);
 			// 
 			// lblPlaylist
 			// 
@@ -101,7 +100,6 @@ namespace Develeon64.SpotifyPlugin.Views {
 			this.Controls.Add(this.lblPlaylist);
 			this.Controls.Add(this.cbxPlaylist);
 			this.Name = "PlaylistActionConfigView";
-			this.Load += new System.EventHandler(this.PlaylistActionConfigView_Load);
 			((System.ComponentModel.ISupportInitialize)(this.nupTrackNumber)).EndInit();
 			this.ResumeLayout(false);
 

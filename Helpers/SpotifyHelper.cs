@@ -33,32 +33,17 @@ namespace Develeon64.SpotifyPlugin.Helpers
 
         public static bool IsConnected => _spotify != null;
 
-        public static bool IsPlaying
-        {
-            get => bool.Parse(VariableManager.Variables.FirstOrDefault(v => v.Name.Equals("spotify_playing"))?.Value ?? string.Empty);
-            set => SetPlaying(value);
-        }
+        public static bool IsPlaying =>
+            bool.Parse(VariableManager.Variables.FirstOrDefault(v => v.Name.Equals("spotify_playing"))?.Value ??
+                       string.Empty);
 
-        public static PlayerSetRepeatRequest.State LoopMode
-        {
-            get
-            {
-                Enum.TryParse(typeof(PlayerSetRepeatRequest.State), VariableManager.Variables.FirstOrDefault(v => v.Name.Equals("spotify_playing_loop"))?.Value, out var mode);
-                return (PlayerSetRepeatRequest.State?)mode ?? PlayerSetRepeatRequest.State.Off;
-            }
-            set => SetLoop(value);
-        }
+        public static bool IsShuffle =>
+            bool.Parse(VariableManager.Variables.FirstOrDefault(v => v.Name.Equals("spotify_playing_shuffle"))?.Value ??
+                       string.Empty);
 
-        public static bool IsShuffle
-        {
-            get => bool.Parse(VariableManager.Variables.FirstOrDefault(v => v.Name.Equals("spotify_playing_shuffle"))?.Value ?? string.Empty);
-            set => SetShuffle(value);
-        }
-        public static int Volume
-        {
-            get => int.Parse(VariableManager.Variables.FirstOrDefault(v => v.Name.Equals("spotify_playing_volume"))?.Value ?? string.Empty);
-            set => SetVolume(value);
-        }
+        public static int Volume =>
+            int.Parse(VariableManager.Variables.FirstOrDefault(v => v.Name.Equals("spotify_playing_volume"))?.Value ??
+                      string.Empty);
 
         public static bool IsPremium { get; private set; } = false;
 
@@ -74,7 +59,7 @@ namespace Develeon64.SpotifyPlugin.Helpers
             if (string.IsNullOrWhiteSpace(token))
                 return;
 
-            Retry.Do(() =>
+            Retry.Do(async () =>
             {
                 try
                 {
@@ -94,11 +79,11 @@ namespace Develeon64.SpotifyPlugin.Helpers
                 }
 
                 ConnectionStateChanged?.Invoke(null, EventArgs.Empty);
-                UpdateVars();
+                await UpdateVars();
             }, TimeSpan.FromSeconds(1));
         }
 
-        public static async void Authorize(string clientId)
+        public static async Task Authorize(string clientId)
         {
             try
             {
@@ -178,7 +163,7 @@ namespace Develeon64.SpotifyPlugin.Helpers
 
         }
 
-        public static async void CheckTokenRefresh()
+        public static async Task CheckTokenRefresh()
         {
             if (_token != null && !(_tokenExpire.Subtract(DateTime.Now).TotalMinutes < 5)) return;
 
@@ -207,7 +192,7 @@ namespace Develeon64.SpotifyPlugin.Helpers
             CredentialHelper.UpdateCredentials(_token.AccessToken, _token.RefreshToken);
         }
 
-        public static async void UpdateVars(bool wait = false)
+        public static async Task UpdateVars(bool wait = false)
         {
             if (_spotify == null)
                 return;
@@ -227,7 +212,8 @@ namespace Develeon64.SpotifyPlugin.Helpers
                     VariableManager.SetValue(VariableNames.PlayingShuffle, item.ShuffleState, VariableType.Bool, PluginInstance.Main, null);
                     VariableManager.SetValue(VariableNames.PlayingLoop, item.RepeatState[..1].ToUpper() + item.RepeatState[1..], VariableType.String, PluginInstance.Main, null);
                     VariableManager.SetValue(VariableNames.PlayingVolume, item?.Device?.VolumePercent ?? 0, VariableType.Integer, PluginInstance.Main, null);
-                    VariableManager.SetValue(VariableNames.TrackInLibrary, (await _spotify?.Library?.CheckTracks(new LibraryCheckTracksRequest(new List<string>(new string[] { track.Id }))))?[0] ?? false, VariableType.Bool, PluginInstance.Main, null);
+                    VariableManager.SetValue(VariableNames.TrackInLibrary, (await _spotify?.Library?.CheckTracks(new LibraryCheckTracksRequest(new List<string>(
+                        [track.Id]))))?[0] ?? false, VariableType.Bool, PluginInstance.Main, null);
                     VariableManager.SetValue(VariableNames.PlayingArtists, artists, VariableType.String, PluginInstance.Main, null);
                     VariableManager.SetValue(VariableNames.PlayingAlbum, track.Album.Name, VariableType.String, PluginInstance.Main, null);
                     VariableManager.SetValue(VariableNames.PlayingTitle, track.Name, VariableType.String, PluginInstance.Main, null);
@@ -257,7 +243,7 @@ namespace Develeon64.SpotifyPlugin.Helpers
             }
         }
 
-        public static async void SetPlaying(bool playing)
+        public static async Task SetPlaying(bool playing)
         {
             if (_spotify == null)
                 return;
@@ -278,10 +264,10 @@ namespace Develeon64.SpotifyPlugin.Helpers
                 MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace);
             }
 
-            UpdateVars(true);
+            await UpdateVars(true);
         }
 
-        public static async void Skip()
+        public static async Task Skip()
         {
             if (_spotify == null)
                 return;
@@ -299,10 +285,10 @@ namespace Develeon64.SpotifyPlugin.Helpers
                 MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace);
             }
 
-            UpdateVars(true);
+            await UpdateVars(true);
         }
 
-        public static async void Previous()
+        public static async Task Previous()
         {
             if (_spotify == null)
                 return;
@@ -320,10 +306,10 @@ namespace Develeon64.SpotifyPlugin.Helpers
                 MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace);
             }
 
-            UpdateVars(true);
+            await UpdateVars(true);
         }
 
-        public static async void SetLoop(PlayerSetRepeatRequest.State state)
+        public static async Task SetLoop(PlayerSetRepeatRequest.State state)
         {
             if (_spotify == null)
                 return;
@@ -341,10 +327,10 @@ namespace Develeon64.SpotifyPlugin.Helpers
                 MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace);
             }
 
-            UpdateVars(true);
+            await UpdateVars(true);
         }
 
-        public static async void SetShuffle(bool shuffle)
+        public static async Task SetShuffle(bool shuffle)
         {
             if (_spotify == null)
                 return;
@@ -362,10 +348,10 @@ namespace Develeon64.SpotifyPlugin.Helpers
                 MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace);
             }
 
-            UpdateVars(true);
+            await UpdateVars(true);
         }
 
-        public static async void SetVolume(int volume)
+        public static async Task SetVolume(int volume)
         {
             if (_spotify == null)
                 return;
@@ -388,10 +374,10 @@ namespace Develeon64.SpotifyPlugin.Helpers
                 MacroDeckLogger.Error(PluginInstance.Main, "Error: " + ex.Message + "\n" + ex.StackTrace);
             }
 
-            UpdateVars(true);
+            await UpdateVars(true);
         }
         
-        public static async void AddLibrary(FullTrack track = null)
+        public static async Task AddLibrary(FullTrack track = null)
         {
             if (_spotify == null) return;
             try
@@ -405,7 +391,7 @@ namespace Develeon64.SpotifyPlugin.Helpers
                 }
 
                 await _spotify.Library.SaveTracks(
-                    new LibrarySaveTracksRequest(new List<string>(new string[] { track.Id })));
+                    new LibrarySaveTracksRequest(new List<string>([track.Id])));
             }
             catch (APIException ex)
             {
@@ -417,7 +403,7 @@ namespace Develeon64.SpotifyPlugin.Helpers
             }
         }
 
-        public static async void RemoveLibrary(FullTrack track = null)
+        public static async Task RemoveLibrary(FullTrack track = null)
         {
             if (_spotify == null) return;
             try
@@ -443,7 +429,7 @@ namespace Develeon64.SpotifyPlugin.Helpers
             }
         }
 
-        public static async void SwitchLibrary()
+        public static async Task SwitchLibrary()
         {
             if (_spotify == null) return;
             try
@@ -453,9 +439,9 @@ namespace Develeon64.SpotifyPlugin.Helpers
                 var track = (FullTrack)playing.Item;
                 if ((await _spotify.Library.CheckTracks(
                         new LibraryCheckTracksRequest(new List<string>(new[] { track.Id }))))[0])
-                    RemoveLibrary(track);
+                    await RemoveLibrary(track);
                 else
-                    AddLibrary(track);
+                    await AddLibrary(track);
             }
             catch (APIException ex)
             {
@@ -467,7 +453,7 @@ namespace Develeon64.SpotifyPlugin.Helpers
             }
         }
 
-        public static async void PlayLibrary(int track = 0)
+        public static async Task PlayLibrary(int track = 0)
         {
             try
             {
@@ -535,9 +521,9 @@ namespace Develeon64.SpotifyPlugin.Helpers
             return tracks;
         }
 
-        public static async Task<List<SimplePlaylist>> GetPlaylists()
+        public static async Task<List<FullPlaylist>> GetPlaylists()
         {
-            var playlists = new List<SimplePlaylist>();
+            var playlists = new List<FullPlaylist>();
             try
             {
                 var request = new PlaylistCurrentUsersRequest()
@@ -571,7 +557,7 @@ namespace Develeon64.SpotifyPlugin.Helpers
             return playlists;
         }
 
-        public static async void SetPlaylist(string id, int track = 0)
+        public static async Task SetPlaylist(string id, int track = 0)
         {
             try
             {

@@ -52,7 +52,7 @@
             this.lblAddRedirect.Name = "lblAddRedirect";
             this.lblAddRedirect.Size = new System.Drawing.Size(463, 59);
             this.lblAddRedirect.TabIndex = 1;
-            this.lblAddRedirect.Text = "In the settings, you need to add \"http://localhost:5000/callback\" to the Redirect" +
+            this.lblAddRedirect.Text = "In the settings, you need to add \"http://127.0.0.1:5000/callback\" to the Redirect" +
     " URIs.";
             this.lblAddRedirect.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 

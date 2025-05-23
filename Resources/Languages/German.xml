@@ -80,7 +80,7 @@
 	<YouNeedASpotifyDevAccount>Zuerst benötigst du einen Spotify Developer Account. Dieser wird erstellt, wenn du dich im Spotify Developer Portal mit deinen Spotify Anmeldedaten anmeldest.</YouNeedASpotifyDevAccount>
 	<OpenSpotifyDeveloperPortal>Spotify Developer Portal öffnen</OpenSpotifyDeveloperPortal>
 	<ContinueAfterLoggedIn>Fahre auf der nächsten Seite fort, wenn du dich im Developer Portal angemeldet hast.</ContinueAfterLoggedIn>
-	<YouNeedAddRedirectUri>Du musst in den Einstellungen "http://localhost:5000/callback" zu den Redirect URIs hinzufügen.</YouNeedAddRedirectUri>
+	<YouNeedAddRedirectUri>Du musst in den Einstellungen "http://127.0.0.1:5000/callback" zu den Redirect URIs hinzufügen.</YouNeedAddRedirectUri>
 	<CopyRedirectUriClipboard>Redirect URI kopieren</CopyRedirectUriClipboard>
 	<AfterPastedUriClickSave>Nachdem du die URI eingefügt hast, klick auf "Add". Danach kannst du auf "Save" klicken und auf der nächsten Seite fortfahren.</AfterPastedUriClickSave>
 	<AfterCreatedDevAccount>

@@ -17,7 +17,7 @@ namespace Develeon64.SpotifyPlugin.Actions
 		public override bool CanConfigure => true;
 
 		public override void Trigger (string clientId, ActionButton actionButton) {
-			var config = PlaylistActionConfigModel.Deserialize(this.Configuration);
+			var config = PlaylistActionConfigModel.Deserialize(Configuration);
             Retry.Do(() =>
             {
                 if (config.Uri == "Library")

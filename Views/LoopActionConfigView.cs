@@ -10,14 +10,14 @@ namespace Develeon64.SpotifyPlugin.Views
 		private readonly LoopActionConfigViewModel _viewModel;
 
 		public LoopActionConfigView (PluginAction action) {
-			this.InitializeComponent();
-			this._viewModel = new LoopActionConfigViewModel(action);
+			InitializeComponent();
+			_viewModel = new LoopActionConfigViewModel(action);
 		}
 
 		private void LoopActionConfigView_Load (object sender, EventArgs e) {
-			this.rbtContext.Checked = this._viewModel.Configuration.Mode == Models.EMode.Activate;
-			this.rbtOff.Checked = this._viewModel.Configuration.Mode == Models.EMode.Deactivate;
-			this.rbtSingle.Checked = this._viewModel.Configuration.Mode == Models.EMode.Toggle;
+			rbtContext.Checked = _viewModel.Configuration.Mode == Models.EMode.Activate;
+			rbtOff.Checked = _viewModel.Configuration.Mode == Models.EMode.Deactivate;
+			rbtSingle.Checked = _viewModel.Configuration.Mode == Models.EMode.Toggle;
 
 			lblMode.Text = PluginLanguageManager.PluginStrings.LoopActionWorkingModeText;
 			rbtOff.Text = PluginLanguageManager.PluginStrings.LoopActionOff;
@@ -26,11 +26,11 @@ namespace Develeon64.SpotifyPlugin.Views
 		}
 
 		public override bool OnActionSave () {
-			if (this.rbtContext.Checked) this._viewModel.Configuration.Mode = Models.EMode.Activate;
-			else if (this.rbtOff.Checked) this._viewModel.Configuration.Mode = Models.EMode.Deactivate;
-			else this._viewModel.Configuration.Mode = Models.EMode.Toggle;
+			if (rbtContext.Checked) _viewModel.Configuration.Mode = Models.EMode.Activate;
+			else if (rbtOff.Checked) _viewModel.Configuration.Mode = Models.EMode.Deactivate;
+			else _viewModel.Configuration.Mode = Models.EMode.Toggle;
 
-			return this._viewModel.SaveConfig();
+			return _viewModel.SaveConfig();
 		}
 	}
 }

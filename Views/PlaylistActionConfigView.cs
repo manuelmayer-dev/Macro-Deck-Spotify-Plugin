@@ -7,42 +7,45 @@ using SuchByte.MacroDeck.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Develeon64.SpotifyPlugin.Views
 {
     public partial class PlaylistActionConfigView : ActionConfigControl {
 		private readonly PlaylistActionConfigViewModel _viewModel;
-		private List<SimplePlaylist> playlists;
+		private List<FullPlaylist> playlists;
 
 		public PlaylistActionConfigView (PluginAction action) {
-			this.InitializeComponent();
-			this._viewModel = new PlaylistActionConfigViewModel(action);
+			InitializeComponent();
+			Load += PlaylistActionConfigView_Load;
+			cbxPlaylist.SelectedIndexChanged += CbxPlaylist_SelectedIndexChanged;
+			_viewModel = new PlaylistActionConfigViewModel(action);
 		}
 
 		private async void PlaylistActionConfigView_Load (object sender, EventArgs e) {
-			this.lblPlaylist.Text = PluginLanguageManager.PluginStrings.PlaylistActionPlaylist;
-			this.lblTrackNumber.Text = PluginLanguageManager.PluginStrings.PlaylistActionTrack;
+			lblPlaylist.Text = PluginLanguageManager.PluginStrings.PlaylistActionPlaylist;
+			lblTrackNumber.Text = PluginLanguageManager.PluginStrings.PlaylistActionTrack;
 
-			this.cbxPlaylist.Items.Add(PluginLanguageManager.PluginStrings.PlaylistActionLibrary);
+			cbxPlaylist.Items.Add(PluginLanguageManager.PluginStrings.PlaylistActionLibrary);
 
-			this.playlists = await SpotifyHelper.GetPlaylists();
-			this.playlists.Sort((x, y) => x.Name.CompareTo(y.Name));
-			foreach (SimplePlaylist playlist in this.playlists)
-				this.cbxPlaylist.Items.Add(playlist.Name);
-			this.cbxPlaylist.SelectedIndex = this.playlists.FindIndex(p => p.Uri == this._viewModel.Configuration.Uri) + 1;
-			this.nupTrackNumber.Value = this._viewModel.Configuration.Track + 1;
+			playlists = await SpotifyHelper.GetPlaylists();
+			playlists.Sort((x, y) => string.Compare(x.Name, y.Name, StringComparison.Ordinal));
+			foreach (var playlist in playlists)
+				cbxPlaylist.Items.Add(playlist.Name);
+			cbxPlaylist.SelectedIndex = playlists.FindIndex(p => p.Uri == _viewModel.Configuration.Uri) + 1;
+			nupTrackNumber.Value = _viewModel.Configuration.Track + 1;
 		}
 
 		public override bool OnActionSave () {
-			this._viewModel.Configuration.Name = this.cbxPlaylist.SelectedItem as string;
-			this._viewModel.Configuration.Uri = this.cbxPlaylist.SelectedIndex == 0 ? "Library" : this.playlists[this.cbxPlaylist.SelectedIndex - 1].Uri;
-			this._viewModel.Configuration.Track = (int)this.nupTrackNumber.Value - 1;
-			return this._viewModel.SaveConfig();
+			_viewModel.Configuration.Name = cbxPlaylist.SelectedItem as string;
+			_viewModel.Configuration.Uri = cbxPlaylist.SelectedIndex == 0 ? "Library" : playlists[cbxPlaylist.SelectedIndex - 1].Uri;
+			_viewModel.Configuration.Track = (int)nupTrackNumber.Value - 1;
+			return _viewModel.SaveConfig();
 		}
 
 		private async void CbxPlaylist_SelectedIndexChanged (object sender, EventArgs e) {
-			this.nupTrackNumber.Maximum = this.cbxPlaylist.SelectedIndex > 0
-				? this.playlists[this.cbxPlaylist.SelectedIndex - 1].Tracks.Total ?? int.MaxValue
+			nupTrackNumber.Maximum = cbxPlaylist.SelectedIndex > 0
+				? playlists[cbxPlaylist.SelectedIndex - 1].Tracks.Total ?? int.MaxValue
 				: (await SpotifyHelper.GetLibraryTracks()).Count;
 		}
 	}

@@ -10,14 +10,14 @@ namespace Develeon64.SpotifyPlugin.Views
 		private readonly LibraryActionConfigViewModel _viewModel;
 
 		public LibraryActionConfigView (PluginAction action) {
-			this.InitializeComponent();
-			this._viewModel = new LibraryActionConfigViewModel(action);
+			InitializeComponent();
+			_viewModel = new LibraryActionConfigViewModel(action);
 		}
 
 		private void LibraryActionConfigView_Load (object sender, EventArgs e) {
-			this.rbtOn.Checked = this._viewModel.Configuration.Mode == Models.EMode.Activate;
-			this.rbtOff.Checked = this._viewModel.Configuration.Mode == Models.EMode.Deactivate;
-			this.rbtToggle.Checked = this._viewModel.Configuration.Mode == Models.EMode.Toggle;
+			rbtOn.Checked = _viewModel.Configuration.Mode == Models.EMode.Activate;
+			rbtOff.Checked = _viewModel.Configuration.Mode == Models.EMode.Deactivate;
+			rbtToggle.Checked = _viewModel.Configuration.Mode == Models.EMode.Toggle;
 
 			lblMode.Text = PluginLanguageManager.PluginStrings.LibraryActionWorkingModeText;
 			rbtOff.Text = PluginLanguageManager.PluginStrings.LibraryActionRemove;
@@ -26,11 +26,11 @@ namespace Develeon64.SpotifyPlugin.Views
 		}
 
 		public override bool OnActionSave () {
-			if (this.rbtOn.Checked) this._viewModel.Configuration.Mode = Models.EMode.Activate;
-			else if (this.rbtOff.Checked) this._viewModel.Configuration.Mode = Models.EMode.Deactivate;
-			else this._viewModel.Configuration.Mode = Models.EMode.Toggle;
+			if (rbtOn.Checked) _viewModel.Configuration.Mode = Models.EMode.Activate;
+			else if (rbtOff.Checked) _viewModel.Configuration.Mode = Models.EMode.Deactivate;
+			else _viewModel.Configuration.Mode = Models.EMode.Toggle;
 
-			return this._viewModel.SaveConfig();
+			return _viewModel.SaveConfig();
 		}
 	}
 }

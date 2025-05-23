@@ -17,7 +17,7 @@ namespace Develeon64.SpotifyPlugin.Actions
 		public override bool CanConfigure => true;
 
 		public override void Trigger (string clientId, ActionButton actionButton) {
-			var model = VolumeActionConfigModel.Deserialize(this.Configuration);
+			var model = VolumeActionConfigModel.Deserialize(Configuration);
 			Enum.TryParse(typeof(EMode), model.Mode.ToString(), out var mode);
             Retry.Do(() =>
             {

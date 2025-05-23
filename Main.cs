@@ -36,14 +36,14 @@ namespace Develeon64.SpotifyPlugin
 
 		public Main () {
 			PluginInstance.Main ??= this;
-            _timer.Elapsed += this.UpdateTimer_Elapsed;
+            _timer.Elapsed += UpdateTimer_Elapsed;
         }
 
 		public override void Enable () {
 			PluginLanguageManager.Initialize();
 			SpotifyHelper.Initialize();
 
-			this.Actions = new List<PluginAction> {
+			Actions = new List<PluginAction> {
 				new PauseAction(),
 				new SkipAction(),
 				new PreviousAction(),
@@ -54,12 +54,12 @@ namespace Develeon64.SpotifyPlugin
 				new LibraryActionAction(),
 			};
 
-			MacroDeck.OnMacroDeckLoaded += this.MacroDeck_OnMacroDeckLoaded;
-			MacroDeck.OnMainWindowLoad += this.MacroDeck_OnMainWindowLoad;
-			SpotifyHelper.ConnectionStateChanged += this.SpotifyHelper_ConnectionStateChanged;
+			MacroDeck.OnMacroDeckLoaded += MacroDeck_OnMacroDeckLoaded;
+			MacroDeck.OnMainWindowLoad += MacroDeck_OnMainWindowLoad;
+			SpotifyHelper.ConnectionStateChanged += SpotifyHelper_ConnectionStateChanged;
 
 			if (MacroDeck.MainWindow is { IsDisposed: false, IsHandleCreated: true })
-				this.MacroDeck_OnMainWindowLoad(MacroDeck.MainWindow, EventArgs.Empty);
+				MacroDeck_OnMainWindowLoad(MacroDeck.MainWindow, EventArgs.Empty);
 
 			SpotifyHelper.Connect(CredentialHelper.GetCredentials()?.AccessToken ?? null);
 		}
@@ -70,27 +70,27 @@ namespace Develeon64.SpotifyPlugin
         }
 		
 		private void MacroDeck_OnMainWindowLoad (object sender, EventArgs e) {
-			this._mainWindow = sender as MainWindow;
+			_mainWindow = sender as MainWindow;
 
-            this._statusToolTip = new ToolTip();
-			this._statusButton = new ContentSelectorButton() {
+            _statusToolTip = new ToolTip();
+			_statusButton = new ContentSelectorButton() {
 				BackgroundImageLayout = ImageLayout.Stretch,
 			};
-			_statusButton.Click += this.StatusButton_Click;
+			_statusButton.Click += StatusButton_Click;
 			_mainWindow?.contentButtonPanel.Controls.Add(_statusButton);
 			
 			SpotifyHelper.CheckTokenRefresh();
-			this.UpdateStatus();
+			UpdateStatus();
 		}
 
 		private void SpotifyHelper_ConnectionStateChanged (object sender, EventArgs e) {
-			this.UpdateStatus();
+			UpdateStatus();
 		}
 
 		private void StatusButton_Click (object sender, EventArgs e) {
 			var spotifyToken = CredentialHelper.GetCredentials()?.AccessToken;
 			if (spotifyToken == null) {
-				this.OpenConfigurator();
+				OpenConfigurator();
 				return;
 			}
 
@@ -110,12 +110,12 @@ namespace Develeon64.SpotifyPlugin
 
 		private void UpdateStatus ()
         {
-            if (this._mainWindow == null || this._mainWindow.IsDisposed || this._statusButton == null ||
-                this._statusButton.IsDisposed) return;
+            if (_mainWindow == null || _mainWindow.IsDisposed || _statusButton == null ||
+                _statusButton.IsDisposed) return;
 			
-            this._mainWindow.Invoke(new Action(() => {
-                this._statusButton.BackgroundImage = SpotifyHelper.IsConnected ? Properties.Resources.Spotify_Connected : Properties.Resources.Spotify_Disconnected;
-                this._statusToolTip.SetToolTip(this._statusButton, "Spotify " + (SpotifyHelper.IsConnected ? $"Connected ({SpotifyHelper.UserName})" : "Disconnected"));
+            _mainWindow.Invoke(new Action(() => {
+                _statusButton.BackgroundImage = SpotifyHelper.IsConnected ? Properties.Resources.Spotify_Connected : Properties.Resources.Spotify_Disconnected;
+                _statusToolTip.SetToolTip(_statusButton, "Spotify " + (SpotifyHelper.IsConnected ? $"Connected ({SpotifyHelper.UserName})" : "Disconnected"));
             }));
         }
 
