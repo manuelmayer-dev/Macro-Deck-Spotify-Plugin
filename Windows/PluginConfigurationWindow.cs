@@ -28,8 +28,6 @@ namespace Develeon64.SpotifyPlugin.Windows
                 new WelcomePage(),
                 new DashboardPage(),
                 new CreateAppPage(),
-                new DashboardClickEditPage(),
-                new EditSettingsPage(),
                 new ClientIdPage(_viewModel),
                 new SuccessPage(this)
             };

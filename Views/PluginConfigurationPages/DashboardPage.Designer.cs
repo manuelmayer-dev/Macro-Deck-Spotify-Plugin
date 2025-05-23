@@ -28,46 +28,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.lblCreatedLoggedIn = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.SuspendLayout();
+            pictureBox1 = new System.Windows.Forms.PictureBox();
+            lblCreatedLoggedIn = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackgroundImage = global::Develeon64.SpotifyPlugin.Properties.Resources.Step1;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(102, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(537, 403);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            pictureBox1.BackgroundImage = Properties.Resources.spotify_1;
+            pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            pictureBox1.Location = new System.Drawing.Point(38, 99);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new System.Drawing.Size(665, 189);
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
             // 
             // lblCreatedLoggedIn
             // 
-            this.lblCreatedLoggedIn.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblCreatedLoggedIn.Location = new System.Drawing.Point(33, 421);
-            this.lblCreatedLoggedIn.Name = "lblCreatedLoggedIn";
-            this.lblCreatedLoggedIn.Size = new System.Drawing.Size(675, 97);
-            this.lblCreatedLoggedIn.TabIndex = 1;
-            this.lblCreatedLoggedIn.Text = "After you created and logged in to the Spotify developer account, you\'ll be redir" +
-    "ected to the dashboard.\r\n\r\nNow click on \"Create an App\" and continue with the ne" +
-    "xt page.";
-            this.lblCreatedLoggedIn.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            lblCreatedLoggedIn.Font = new System.Drawing.Font("Tahoma", 12F);
+            lblCreatedLoggedIn.Location = new System.Drawing.Point(33, 291);
+            lblCreatedLoggedIn.Name = "lblCreatedLoggedIn";
+            lblCreatedLoggedIn.Size = new System.Drawing.Size(675, 97);
+            lblCreatedLoggedIn.TabIndex = 1;
+            lblCreatedLoggedIn.Text = "After you created and logged in to the Spotify developer account, you'll be redirected to the dashboard.\r\n\r\nNow click on \"Create app\" and continue with the next page.";
+            lblCreatedLoggedIn.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // DashboardPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Controls.Add(this.lblCreatedLoggedIn);
-            this.Controls.Add(this.pictureBox1);
-            this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ForeColor = System.Drawing.Color.White;
-            this.Name = "DashboardPage";
-            this.Size = new System.Drawing.Size(741, 518);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            BackColor = System.Drawing.Color.FromArgb(45, 45, 45);
+            Controls.Add(lblCreatedLoggedIn);
+            Controls.Add(pictureBox1);
+            Font = new System.Drawing.Font("Tahoma", 9F);
+            ForeColor = System.Drawing.Color.White;
+            Name = "DashboardPage";
+            Size = new System.Drawing.Size(741, 518);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ResumeLayout(false);
 
         }
 

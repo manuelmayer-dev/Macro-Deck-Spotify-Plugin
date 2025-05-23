@@ -85,7 +85,7 @@
 	<AfterPastedUriClickSave>After you pasted the uri and clicked on "Add", you can click "Save" and continue with the next page.</AfterPastedUriClickSave>
 	<AfterCreatedDevAccount>After you created and logged in to the Spotify developer account, you'll be redirected to the dashboard.
 
-		Now click on "Create an App" and continue with the next page.</AfterCreatedDevAccount>
+		Now click on "Create app" and continue with the next page.</AfterCreatedDevAccount>
 	<AfterCreatedApp>After you created the app, you'll be redirected to the app's overview.
 
 		Now click on "Edit Settings" and continue with the next page.</AfterCreatedApp>

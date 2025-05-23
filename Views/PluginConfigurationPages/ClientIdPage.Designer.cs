@@ -30,101 +30,101 @@ namespace Develeon64.SpotifyPlugin.Views.PluginConfigurationPages
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.lblCopyClientIdAndPaste = new System.Windows.Forms.Label();
-            this.lblClientId = new System.Windows.Forms.Label();
-            this.clientId = new SuchByte.MacroDeck.GUI.CustomControls.RoundedTextBox();
-            this.btnAuthorize = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.SuspendLayout();
+            pictureBox1 = new System.Windows.Forms.PictureBox();
+            lblCopyClientIdAndPaste = new System.Windows.Forms.Label();
+            lblClientId = new System.Windows.Forms.Label();
+            clientId = new RoundedTextBox();
+            btnAuthorize = new ButtonPrimary();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackgroundImage = global::Develeon64.SpotifyPlugin.Properties.Resources.Step5;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(102, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(537, 282);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            pictureBox1.BackgroundImage = Properties.Resources.spotify_3;
+            pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            pictureBox1.Location = new System.Drawing.Point(18, 32);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new System.Drawing.Size(705, 282);
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
             // 
             // lblCopyClientIdAndPaste
             // 
-            this.lblCopyClientIdAndPaste.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblCopyClientIdAndPaste.Location = new System.Drawing.Point(33, 288);
-            this.lblCopyClientIdAndPaste.Name = "lblCopyClientIdAndPaste";
-            this.lblCopyClientIdAndPaste.Size = new System.Drawing.Size(675, 50);
-            this.lblCopyClientIdAndPaste.TabIndex = 1;
-            this.lblCopyClientIdAndPaste.Text = "Now you\'re on the overview page of your created app. Copy the \"Client ID\" and pas" +
-    "te it in the textbox below";
-            this.lblCopyClientIdAndPaste.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            lblCopyClientIdAndPaste.Font = new System.Drawing.Font("Tahoma", 12F);
+            lblCopyClientIdAndPaste.Location = new System.Drawing.Point(33, 317);
+            lblCopyClientIdAndPaste.Name = "lblCopyClientIdAndPaste";
+            lblCopyClientIdAndPaste.Size = new System.Drawing.Size(675, 50);
+            lblCopyClientIdAndPaste.TabIndex = 1;
+            lblCopyClientIdAndPaste.Text = "Now you're on the overview page of your created app. Copy the \"Client ID\" and paste it in the textbox below";
+            lblCopyClientIdAndPaste.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // lblClientId
             // 
-            this.lblClientId.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblClientId.Location = new System.Drawing.Point(148, 352);
-            this.lblClientId.Name = "lblClientId";
-            this.lblClientId.Size = new System.Drawing.Size(107, 25);
-            this.lblClientId.TabIndex = 2;
-            this.lblClientId.Text = "Client ID";
-            this.lblClientId.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblClientId.Font = new System.Drawing.Font("Tahoma", 12F);
+            lblClientId.Location = new System.Drawing.Point(90, 381);
+            lblClientId.Name = "lblClientId";
+            lblClientId.Size = new System.Drawing.Size(107, 25);
+            lblClientId.TabIndex = 2;
+            lblClientId.Text = "Client ID";
+            lblClientId.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // clientId
             // 
-            this.clientId.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.clientId.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
-            this.clientId.Icon = null;
-            this.clientId.Location = new System.Drawing.Point(261, 351);
-            this.clientId.MaxCharacters = 32767;
-            this.clientId.Multiline = false;
-            this.clientId.Name = "clientId";
-            this.clientId.Padding = new System.Windows.Forms.Padding(8, 5, 8, 5);
-            this.clientId.PasswordChar = false;
-            this.clientId.PlaceHolderColor = System.Drawing.Color.Gray;
-            this.clientId.PlaceHolderText = "Paste the copied Client ID here";
-            this.clientId.ReadOnly = false;
-            this.clientId.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.clientId.SelectionStart = 0;
-            this.clientId.Size = new System.Drawing.Size(332, 29);
-            this.clientId.TabIndex = 3;
-            this.clientId.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            clientId.BackColor = System.Drawing.Color.FromArgb(65, 65, 65);
+            clientId.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Italic);
+            clientId.Icon = null;
+            clientId.Location = new System.Drawing.Point(203, 380);
+            clientId.MaxCharacters = 32767;
+            clientId.Multiline = false;
+            clientId.Name = "clientId";
+            clientId.Padding = new System.Windows.Forms.Padding(8, 5, 8, 5);
+            clientId.PasswordChar = false;
+            clientId.PlaceHolderColor = System.Drawing.Color.Gray;
+            clientId.PlaceHolderText = "Paste the copied Client ID here";
+            clientId.ReadOnly = false;
+            clientId.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            clientId.SelectionStart = 0;
+            clientId.Size = new System.Drawing.Size(447, 29);
+            clientId.TabIndex = 3;
+            clientId.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // btnAuthorize
             // 
-            this.btnAuthorize.BorderRadius = 8;
-            this.btnAuthorize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAuthorize.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnAuthorize.ForeColor = System.Drawing.Color.White;
-            this.btnAuthorize.HoverColor = System.Drawing.Color.Empty;
-            this.btnAuthorize.Icon = null;
-            this.btnAuthorize.Location = new System.Drawing.Point(230, 402);
-            this.btnAuthorize.Name = "btnAuthorize";
-            this.btnAuthorize.Progress = 0;
-            this.btnAuthorize.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(103)))), ((int)(((byte)(205)))));
-            this.btnAuthorize.Size = new System.Drawing.Size(281, 55);
-            this.btnAuthorize.TabIndex = 4;
-            this.btnAuthorize.Text = "Authorize";
-            this.btnAuthorize.UseVisualStyleBackColor = true;
-            this.btnAuthorize.UseWindowsAccentColor = true;
-            this.btnAuthorize.Visible = false;
-            this.btnAuthorize.Click += new System.EventHandler(this.BtnAuthorize_Click);
+            btnAuthorize.BorderRadius = 8;
+            btnAuthorize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnAuthorize.Font = new System.Drawing.Font("Tahoma", 12F);
+            btnAuthorize.ForeColor = System.Drawing.Color.White;
+            btnAuthorize.HoverColor = System.Drawing.Color.Empty;
+            btnAuthorize.Icon = null;
+            btnAuthorize.Location = new System.Drawing.Point(230, 431);
+            btnAuthorize.Name = "btnAuthorize";
+            btnAuthorize.Progress = 0;
+            btnAuthorize.ProgressColor = System.Drawing.Color.FromArgb(0, 103, 205);
+            btnAuthorize.Size = new System.Drawing.Size(281, 55);
+            btnAuthorize.TabIndex = 4;
+            btnAuthorize.Text = "Authorize";
+            btnAuthorize.UseVisualStyleBackColor = true;
+            btnAuthorize.UseWindowsAccentColor = true;
+            btnAuthorize.Visible = false;
+            btnAuthorize.WriteProgress = true;
+            btnAuthorize.Click += BtnAuthorize_Click;
             // 
             // ClientIdPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Controls.Add(this.btnAuthorize);
-            this.Controls.Add(this.clientId);
-            this.Controls.Add(this.lblClientId);
-            this.Controls.Add(this.lblCopyClientIdAndPaste);
-            this.Controls.Add(this.pictureBox1);
-            this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ForeColor = System.Drawing.Color.White;
-            this.Name = "ClientIdPage";
-            this.Size = new System.Drawing.Size(741, 518);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            BackColor = System.Drawing.Color.FromArgb(45, 45, 45);
+            Controls.Add(btnAuthorize);
+            Controls.Add(clientId);
+            Controls.Add(lblClientId);
+            Controls.Add(lblCopyClientIdAndPaste);
+            Controls.Add(pictureBox1);
+            Font = new System.Drawing.Font("Tahoma", 9F);
+            ForeColor = System.Drawing.Color.White;
+            Name = "ClientIdPage";
+            Size = new System.Drawing.Size(741, 518);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ResumeLayout(false);
 
         }
 

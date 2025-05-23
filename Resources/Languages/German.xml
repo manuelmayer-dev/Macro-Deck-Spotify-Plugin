@@ -86,7 +86,7 @@
 	<AfterCreatedDevAccount>
 		Nachdem du den Developer Account erstellt hast, wirst du auf das Dashboard weitergeleitet.
 
-		Klicke nun auf "Create an App" und fahre mit der nächsten Seite fort.
+		Klicke nun auf "Create app" und fahre mit der nächsten Seite fort.
 	</AfterCreatedDevAccount>
 	<AfterCreatedApp>
 		Nachdem du die App erstellt hast, wirst du auf die Übersichtsseite der App weitergeleitet.

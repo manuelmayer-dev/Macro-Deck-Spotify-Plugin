@@ -28,45 +28,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.lblFillInAppDetails = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.SuspendLayout();
+            pictureBox1 = new System.Windows.Forms.PictureBox();
+            lblFillInAppDetails = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackgroundImage = global::Develeon64.SpotifyPlugin.Properties.Resources.Step2;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(102, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(537, 403);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            pictureBox1.BackgroundImage = Properties.Resources.spotify_2;
+            pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            pictureBox1.Location = new System.Drawing.Point(54, 0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new System.Drawing.Size(632, 480);
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
             // 
             // lblFillInAppDetails
             // 
-            this.lblFillInAppDetails.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblFillInAppDetails.Location = new System.Drawing.Point(33, 421);
-            this.lblFillInAppDetails.Name = "lblFillInAppDetails";
-            this.lblFillInAppDetails.Size = new System.Drawing.Size(675, 97);
-            this.lblFillInAppDetails.TabIndex = 1;
-            this.lblFillInAppDetails.Text = "Now fill in the app details as on the picture and click on \"Create\".\r\n\r\nAfter tha" +
-    "t, continue with the next page.";
-            this.lblFillInAppDetails.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            lblFillInAppDetails.Font = new System.Drawing.Font("Tahoma", 12F);
+            lblFillInAppDetails.Location = new System.Drawing.Point(33, 483);
+            lblFillInAppDetails.Name = "lblFillInAppDetails";
+            lblFillInAppDetails.Size = new System.Drawing.Size(675, 28);
+            lblFillInAppDetails.TabIndex = 1;
+            lblFillInAppDetails.Text = "Now fill in the app details as on the picture and click on \"Save\".";
+            lblFillInAppDetails.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // CreateAppPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Controls.Add(this.lblFillInAppDetails);
-            this.Controls.Add(this.pictureBox1);
-            this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ForeColor = System.Drawing.Color.White;
-            this.Name = "CreateAppPage";
-            this.Size = new System.Drawing.Size(741, 518);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            BackColor = System.Drawing.Color.FromArgb(45, 45, 45);
+            Controls.Add(lblFillInAppDetails);
+            Controls.Add(pictureBox1);
+            Font = new System.Drawing.Font("Tahoma", 9F);
+            ForeColor = System.Drawing.Color.White;
+            Name = "CreateAppPage";
+            Size = new System.Drawing.Size(741, 518);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ResumeLayout(false);
 
         }
 

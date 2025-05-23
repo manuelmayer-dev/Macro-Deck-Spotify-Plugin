@@ -21,7 +21,7 @@ namespace Develeon64.SpotifyPlugin.Views.PluginConfigurationPages
         {
             var p = new Process
             {
-                StartInfo = new ProcessStartInfo("https://developer.spotify.com/dashboard/login")
+                StartInfo = new ProcessStartInfo("https://developer.spotify.com/dashboard")
                 {
                     UseShellExecute = true,
                 }
