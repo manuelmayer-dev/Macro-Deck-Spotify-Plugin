@@ -32,7 +32,7 @@ Control your Spotify-Player using Macro Deck 2
 ## Installation
 1. Go to the [Spotify Developer Portal](https://developers.spotify.com/)
 2. Create a new App, give it a name and description of your choice
-3. Add ``http://localhost:5000/callback`` in the Redirect URIs field
+3. Add ``http://127.0.0.1:5000/callback`` in the Redirect URIs field
 4. Copy the client ID of your new App into the Configuration field in Macro Deck
 5. Press the "Authorize Spotify"-Button
 6. It should open your browser, where you must authorize the App to access your Spotify account.\
