@@ -19,7 +19,7 @@ namespace Develeon64.SpotifyPlugin.Helpers
     public static class SpotifyHelper
     {
         private const int CallbackPort = 5000;
-        private static readonly Uri CallbackUri = new Uri($"http://localhost:{CallbackPort}/callback");
+        private static readonly Uri CallbackUri = new Uri($"http://127.0.0.1:{CallbackPort}/callback");
 
         private static EmbedIOAuthServer _server;
         private static SpotifyClient _spotify;
